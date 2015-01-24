@@ -29,7 +29,7 @@ public class Map {
 		for (int i = 0; i <= tileWidth; i++) {
 			for (int j = 0; j <= tileHeight; j++){
 				if(i == 0 || i == tileWidth || j == 0 || j == tileHeight
-						|| i == 2 || j == 3) {
+						|| i == 2) {
 					tileArray[i][j] = new Tile(TileType.WALL, 
 							i, j-1);
 				} else {
