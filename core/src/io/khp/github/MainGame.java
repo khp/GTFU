@@ -1,5 +1,7 @@
 package io.khp.github;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -9,12 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
-
 import com.badlogic.gdx.math.*;
-
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.files.FileHandle;
 
@@ -38,6 +35,8 @@ public class MainGame extends ApplicationAdapter {
 	private Rectangle intersectionPlayer1;
 	private Rectangle intersectionPlayer2;
 	private Rectangle intersectionPlayers;
+	
+	private Map map;
 
 	// sets up the game
 	@Override
@@ -55,6 +54,8 @@ public class MainGame extends ApplicationAdapter {
 		intersectionPlayer1 = new Rectangle();
 		intersectionPlayer2 = new Rectangle();
 		intersectionPlayers = new Rectangle();
+		
+		map = new Map();
 		
 		testMap = Gdx.files.internal("testmap.png.jpg");
 		mapDrawer = new MapDrawer(testMap);
@@ -81,6 +82,13 @@ public class MainGame extends ApplicationAdapter {
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		
 		shapeRenderer.begin(ShapeType.Filled);
+
+		//draw map from ArrayList of Rectangle
+		for (Rectangle r : map.getRectList()) {
+			shapeRenderer.setColor(0,0,1,1);
+			shapeRenderer.rect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+		}
+		
 		shapeRenderer.setColor(0, 1, 0, 1);
 		shapeRenderer.rect(player1.getX(), player1.getY(), player1.getWidth(),
 				player1.getHeight());
@@ -90,6 +98,7 @@ public class MainGame extends ApplicationAdapter {
 		shapeRenderer.setColor(1, 0, 0, 0);
 		shapeRenderer.rect(player2.getX(), player2.getY(), player2.getWidth(),
 				player2.getHeight());
+		
 		shapeRenderer.end();
 		
 		batch.end();
@@ -198,6 +207,32 @@ public class MainGame extends ApplicationAdapter {
 
 	// Collision method
 	private void updateCollsions() {
+		
+		// check collision with wall
+		for (Rectangle r : map.getRectList()) {
+			if (Intersector.intersectRectangles(player1.getRect(), r, 
+					intersectionPlayer1)) {
+				player1.setXVelocity(0);
+				if (player1.getX() < intersectionPlayer1.getX()) {
+					player1.setX(player1.getX() - 1);
+				} else {
+					player1.setX(player1.getX() + r.getWidth() + 1);
+				}
+				
+			}
+			
+			if (Intersector.intersectRectangles(player2.getRect(), r, 
+					intersectionPlayer1)) {
+				player2.setXVelocity(0);
+				if (player2.getX() < intersectionPlayer1.getX()) {
+					player2.setX(player2.getX() - 1);
+				} else {
+					player2.setX(player2.getX() + 1);
+				}
+				
+			}
+		}
+		
 		if (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
 			// player1.setXVelocity(0);
 			// player2.setXVelocity(0);
