@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class MainGame extends ApplicationAdapter {
 	
-	public static final float gravity = 100;
+	public static final float GRAVITY = 100;
 	private static final int BOARDX = 800;
 	private static final int BOARDY = 480;
 	private OrthographicCamera camera;
@@ -21,22 +21,24 @@ public class MainGame extends ApplicationAdapter {
 	private ShapeRenderer shapeRenderer;
 	private Player1 player1;
 	
+	// sets up the game
 	@Override
 	public void create () {
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
-		batch = new SpriteBatch();
+		camera = new OrthographicCamera(); // init camera
+		camera.setToOrtho(false, BOARDX, BOARDY);
+		batch = new SpriteBatch(); 
 		shapeRenderer = new ShapeRenderer();
 		player1 = new Player1();
 	}
-
+	// Analogous to main - Handles inputs, updates player coordinates / physics and
+	//                     Draw to board.
 	@Override
 	public void render () {
-		draw();
 		handleInput();
 		updatePlayers();
+		draw();
 	}
-	
+	// 
 	private void draw() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -91,7 +93,7 @@ public class MainGame extends ApplicationAdapter {
 		else {
 			// currentYVel = player1.getYVelocity();
 			// currentY = player1.getY();
-			player1.setYVelocity(currentYVel - gravity * Gdx.graphics.getDeltaTime());
+			player1.setYVelocity(currentYVel - GRAVITY * Gdx.graphics.getDeltaTime());
 		}
 	}
 	
