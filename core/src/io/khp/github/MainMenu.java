@@ -70,7 +70,14 @@ public class MainMenu implements Screen {
 		stage.addActor(textButton);
 		stage.addActor(textButton);
 		stage.addActor(textButton);
-
+		textButton.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+			//System.out.println("Clicked! Is checked: " + button.isChecked());
+			textButton.setText("Starting new game");
+			g.setScreen( new GameScreen(g));
+			 
+			}
+			});
 	}
 
 	public void render(float delta) {
