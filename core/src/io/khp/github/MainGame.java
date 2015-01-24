@@ -49,7 +49,7 @@ public class MainGame extends ApplicationAdapter {
 		
 		player1 = new Player1();
 		
-		// jumprenew = new JumpRenew();
+		jumprenew = new JumpRenew();
 		
 		player2 = new Player2();
 		intersectionPlayer1 = new Rectangle();
@@ -98,7 +98,6 @@ public class MainGame extends ApplicationAdapter {
 
 	private void handleInput() {
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			// player1.moveLeft();
 			player1.setXVelocity(-player1.getSpeed());
 		}
 		else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -115,7 +114,6 @@ public class MainGame extends ApplicationAdapter {
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.A)) {
-			// player2.moveLeft();
 			player2.setXVelocity(-player2.getSpeed());
 		}
 		else if (Gdx.input.isKeyPressed(Keys.D)) {
@@ -165,12 +163,9 @@ public class MainGame extends ApplicationAdapter {
 		}
 
 		// on collision the dot disappears and the players jump limit is increased by one.
-		/* if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
+		if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
 			player1.setAirborne(false);
 		}
-		//}
-		 * 
-		 */
 		
 		// Update Player 2
 		currentXVel = player2.getXVelocity();
@@ -210,7 +205,7 @@ public class MainGame extends ApplicationAdapter {
 			if (player1.getY() > player2.getY()) {
 				player1.setYVelocity(player2.getYVelocity());
 			}
-			else if (player1.getY() < player2.getY()) {
+			else if (player1.getY() <= player2.getY()) {
 				player2.setYVelocity(player1.getYVelocity());
 			}
 			
@@ -227,13 +222,13 @@ public class MainGame extends ApplicationAdapter {
 				
 				player1.setAirborne(false);
 			}
-			else if (player1Y < player2Y) {
+			else if (player1Y <= player2Y) {
 				// player1.setY(player1Y - yDisplacement);
 				player2.setY(player2Y + yDisplacement);
 				
 				player2.setAirborne(false);
 			}
-			else if (player1X > player2X) {
+			else if (player1X >= player2X) {
 				player1.setX(player1X + xDisplacement);
 				player2.setX(player2X - xDisplacement);
 			}
