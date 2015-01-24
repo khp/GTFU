@@ -29,7 +29,7 @@ public class Map {
 		for (int i = 0; i <= tileWidth; i++) {
 			for (int j = 0; j <= tileHeight; j++){
 				if(i == 0 || i == tileWidth || j == 0 || j == tileHeight
-						|| i == 2) {
+						|| i == 2 || i == 30) {
 					tileArray[i][j] = new Tile(TileType.WALL, 
 							i, j-1);
 				} else {
@@ -55,13 +55,19 @@ public class Map {
 		Rectangle intersection = new Rectangle();
 		for (Rectangle r : rectList) {
 			if (Intersector.intersectRectangles(playerRect, r, intersection)) {
-				if (intersection.getX() < (playerRect.getX() + playerRect.getWidth())) {
-					return intersection.getX(); // determine the left hand size of the intersect box
-					}
-				else if (playerRect.getX() < (intersection.getX() + intersection.getWidth()) ) {
-					return intersection.getX() + intersection.getWidth(); // determine the right side of the intersect box
+				
+				if (intersection.getX() == playerRect.getX()) {
+					return intersection.getX() + intersection.getWidth();
+				} else {
+					return intersection.getX() - playerRect.getWidth();
 				}
-			
+				
+				//if (playerRect.getX() < (intersection.getX() + intersection.getWidth()) ) {
+					//return intersection.getX() + intersection.getWidth(); // determine the right side of the intersect box
+				//}
+				//else if (intersection.getX() < playerRect.getX()) {
+				//	return intersection.getX(); // determine the left hand size of the intersect box
+				//}
 			}
 		}
 		return playerRect.getX();
