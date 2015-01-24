@@ -22,11 +22,10 @@ import com.badlogic.gdx.graphics.GL20;
 public class MainMenu implements Screen {
 	Skin skin;
 	Stage stage;
-	SpriteBatch batch;
 
-	Game g;
+	MainGame g;
 
-	public MainMenu(Game g) {
+	public MainMenu(MainGame g) {
 		create();
 		this.g = g;
 	}
@@ -36,7 +35,6 @@ public class MainMenu implements Screen {
 	}
 
 	public void create() {
-		batch = new SpriteBatch();
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 

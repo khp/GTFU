@@ -16,7 +16,7 @@ public class Player2 {
 		rect = new Rectangle();
 		rect.width = height;
 		rect.height = width;
-		rect.x = MainGame.getBoardHeight() / 2 - rect.width / 2;
+		rect.x = GameScreen.getBoardHeight() / 2 - rect.width / 2;
 		rect.y = 200;
 		yVelocity = 0;
 		xVelocity = 0;

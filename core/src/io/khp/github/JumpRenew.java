@@ -14,7 +14,7 @@ public class JumpRenew {
 		 // small floating white dot on screen
 		 circle = new Circle();
 		 circle.radius = radius;
-		 circle.x = MainGame.getBoardHeight() / 3;
+		 circle.x = GameScreen.getBoardHeight() / 3;
 		 circle.y = 50;
 	 }	 
 	 
