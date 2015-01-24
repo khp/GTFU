@@ -35,6 +35,10 @@ public class Player1 {
 		this.airborne = true;
 	}
 	
+	public Rectangle getRect() {
+		return this.rect;
+	}
+	
 	public float getX() {
 		return rect.x;
 	}

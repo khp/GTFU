@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.files.FileHandle;
 
@@ -28,6 +28,10 @@ public class MainGame extends ApplicationAdapter {
 	
 	private FileHandle testMap;
 	private MapDrawer mapDrawer;
+	
+	private Rectangle intersectionPlayer1;
+	private Rectangle intersectionPlayer2;
+	private Rectangle intersectionPlayers;
 
 	// sets up the game
 	@Override
@@ -39,6 +43,9 @@ public class MainGame extends ApplicationAdapter {
 		
 		player1 = new Player1();
 		player2 = new Player2();
+		intersectionPlayer1 = new Rectangle();
+		intersectionPlayer2 = new Rectangle();
+		intersectionPlayers = new Rectangle();
 
 		testMap = Gdx.files.internal("testmap.png.jpg");
 		mapDrawer = new MapDrawer(testMap);
@@ -151,6 +158,18 @@ public class MainGame extends ApplicationAdapter {
 			player2.setYVelocity(currentYVel - 10 * GRAVITY
 					* Gdx.graphics.getDeltaTime());
 		}
+		
+		// Update collisions
+		updateCollsions();
+	}
+
+	// Collision method
+	private void updateCollsions() {
+		if (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
+			player1.setXVelocity(0);
+			player2.setXVelocity(0);
+		}
+		
 	}
 
 	public static int getBoardHeight() {
