@@ -15,7 +15,7 @@ import com.badlogic.gdx.files.FileHandle;
 
 public class MainGame extends ApplicationAdapter {
 
-	public static final float GRAVITY = 100;
+	public static final float GRAVITY = 200;
 	private static final int BOARDX = 800;
 	private static final int BOARDY = 480;
 	private OrthographicCamera camera;
@@ -95,14 +95,14 @@ public class MainGame extends ApplicationAdapter {
 		if (player1.getY() > BOARDY - player1.getHeight() / 2) {
 			player1.setYVelocity(0);
 			player1.setY(BOARDY - player1.getHeight() / 2);
-		} else if (player1.getY() <= 0) {
+		} else if (player1.getY() < 0) {
 			player1.setYVelocity(0);
 			player1.setY(0);
 			player1.setAirborne(false);
 		} else {
 			// currentYVel = player1.getYVelocity();
 			// currentY = player1.getY();
-			player1.setYVelocity(currentYVel - GRAVITY
+			player1.setYVelocity(currentYVel - 10 * GRAVITY
 					* Gdx.graphics.getDeltaTime());
 		}
 	}
