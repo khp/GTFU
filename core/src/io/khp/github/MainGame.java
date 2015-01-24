@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.files.FileHandle;
@@ -24,6 +25,7 @@ public class MainGame extends ApplicationAdapter {
 	private Player1 player1;
 	private FileHandle testMap;
 	private MapDrawer mapDrawer;
+	private JumpRenew jumprenew;
 
 	// sets up the game
 	@Override
@@ -33,6 +35,7 @@ public class MainGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		player1 = new Player1();
+		jumprenew = new JumpRenew();
 
 		testMap = Gdx.files.internal("testmap.png.jpg");
 		mapDrawer = new MapDrawer(testMap);
@@ -61,6 +64,7 @@ public class MainGame extends ApplicationAdapter {
 		shapeRenderer.setColor(0, 1, 0, 1);
 		shapeRenderer.rect(player1.getX(), player1.getY(), player1.getWidth(),
 				player1.getHeight());
+		shapeRenderer.circle(jumprenew.getX(), jumprenew.getY(), jumprenew.getRadius());
 		shapeRenderer.end();
 		batch.end();
 
@@ -105,6 +109,11 @@ public class MainGame extends ApplicationAdapter {
 			player1.setYVelocity(currentYVel - GRAVITY
 					* Gdx.graphics.getDeltaTime());
 		}
+		JumpRenew renew = new JumpRenew();
+		
+		// on collision the dot disappears and the players jump limit is increased by one.
+		//if (Intersector.overlaps(renew.getCircle(),  )
+		//}
 	}
 
 	public static int getBoardHeight() {
@@ -114,4 +123,5 @@ public class MainGame extends ApplicationAdapter {
 	public static int getBoardWidth() {
 		return BOARDX;
 	}
+
 }
