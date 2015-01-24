@@ -8,10 +8,10 @@ public class Map {
 	private int tileHeight;
 	private int tileWidth;
 
-	Map (int pxWidth, int pxHeight, int pxTileWidth, int pxTileHeight) {
+	Map (int pxWidth, int pxHeight, int pxTileWidth, int pxTileHeight, 
+			Tile[][] tileArray) {
 		this.tileHeight = pxHeight/pxTileHeight;
 		this.tileWidth = pxWidth/pxTileWidth;
-		this.tileArray = new ArrayList();
 		
 	}
 	
@@ -22,7 +22,7 @@ public class Map {
 		tileWidth = 26;
 		tileHeight = 41;
 		
-		tileArray[tileWidth+1][tileHeight+1];
+		tileArray = new Tile[tileWidth + 1][tileHeight + 1];
 		
 		for (int i = 0; i <= tileWidth; i++) {
 			for (int j = 0; j <= tileHeight; j++){
@@ -38,6 +38,7 @@ public class Map {
 		tileArray[24][24].setType(TileType.WALL);
 		tileArray[23][23].setType(TileType.WALL);
 	}
+	
 	
 	
 	
