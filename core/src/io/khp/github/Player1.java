@@ -10,24 +10,17 @@ public class Player1 {
 	private float xVelocity;
 	private final int height = 24;
 	private final int width = 24;
+	private final int speed = 200;
 	private boolean airborne;
 	
 	public Player1() {
 		rect = new Rectangle();
 		rect.width = height;
 		rect.height = width;
-		rect.x = MainGame.getBoardHeight() / 2 - rect.width / 2;
+		rect.x = MainGame.getBoardHeight() / 4 - rect.width / 2;
 		rect.y = 200;
 		yVelocity = 0;
 		xVelocity = 0;
-	}
-	
-	public void moveLeft() {
-		rect.x -= 200 * Gdx.graphics.getDeltaTime();
-	}
-	
-	public void moveRight() {
-		rect.x += 200 * Gdx.graphics.getDeltaTime();
 	}
 	
 	public void jump() {
@@ -61,6 +54,10 @@ public class Player1 {
 	
 	public float getHeight() {
 		return rect.height;
+	}
+	
+	public int getSpeed() {
+		return this.speed;
 	}
 	
 	public float getYVelocity() {
