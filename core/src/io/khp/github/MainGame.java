@@ -49,7 +49,7 @@ public class MainGame extends ApplicationAdapter {
 		
 		player1 = new Player1();
 		
-		//jumprenew = new JumpRenew();
+		// jumprenew = new JumpRenew();
 		
 		player2 = new Player2();
 		intersectionPlayer1 = new Rectangle();
@@ -165,10 +165,12 @@ public class MainGame extends ApplicationAdapter {
 		}
 
 		// on collision the dot disappears and the players jump limit is increased by one.
-		if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
+		/* if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
 			player1.setAirborne(false);
 		}
 		//}
+		 * 
+		 */
 		
 		// Update Player 2
 		currentXVel = player2.getXVelocity();
