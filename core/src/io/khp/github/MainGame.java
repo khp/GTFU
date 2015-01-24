@@ -235,22 +235,22 @@ public class MainGame extends ApplicationAdapter {
 			float player1Y = player1.getY();
 			float player2X = player2.getX();
 			float player2Y = player2.getY();
-			float xDisplacement = intersectionPlayers.width / 2;
-			float yDisplacement = intersectionPlayers.height / 2;
+			float xDisplacement = intersectionPlayers.width;
+			float yDisplacement = intersectionPlayers.height;
 			
-			if (player1Y >= player2Y) {
+			if (player1Y > player2Y) {
 				player1.setY(player1Y + yDisplacement);
 				player2.setY(player2Y - yDisplacement);
 				
 				player1.setAirborne(false);
 			}
-			else if (player1Y <= player2Y) {
+			else if (player1Y < player2Y) {
 				player1.setY(player1Y - yDisplacement);
 				player2.setY(player2Y + yDisplacement);
 				
 				player2.setAirborne(false);
 			}
-			else if (player1X >= player2X) {
+			else if (player1X > player2X) {
 				player1.setX(player1X + xDisplacement);
 				player2.setX(player2X - xDisplacement);
 			}
