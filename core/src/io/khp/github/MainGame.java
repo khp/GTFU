@@ -9,41 +9,42 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.files.FileHandle;
 
 public class MainGame extends ApplicationAdapter {
+	
+	public static final float GRAVITY = 100;
+	private static final int BOARDX = 800;
+	private static final int BOARDY = 480;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private ShapeRenderer shapeRenderer;
-	private Texture img;
-	private FileHandle testMap;
 	private Player1 player1;
-	private MapDrawer mapDrawer;
 	
+	// sets up the game
 	@Override
 	public void create () {
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
-		batch = new SpriteBatch();
+		camera = new OrthographicCamera(); // init camera
+		camera.setToOrtho(false, BOARDX, BOARDY);
+		batch = new SpriteBatch(); 
 		shapeRenderer = new ShapeRenderer();
-		img = new Texture("badlogic.jpg");
 		player1 = new Player1();
+
 		testMap = Gdx.files.internal("testmap.png.jpg");
 		mapDrawer = new MapDrawer(testMap);
 		System.out.println();
 	}
-	
-
+	// Analogous to main - Handles inputs, updates player coordinates / physics and
+	//                     Draw to board.
 	@Override
 	public void render () {
-		draw();
 		handleInput();
+		updatePlayers();
+		draw();
 	}
-	
+	// 
 	private void draw() {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		
@@ -59,11 +60,52 @@ public class MainGame extends ApplicationAdapter {
 	}
 	
 	private void handleInput() {
+		if (!player1.getAirborne()) {
 			if(Gdx.input.isKeyPressed(Keys.LEFT)) {
 				player1.moveLeft();
 			}
 			if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
 				player1.moveRight();
+			}
+			if(Gdx.input.isKeyPressed(Keys.SPACE)) {
+				player1.jump();
+			}
 		}
+	}
+	
+
+	
+	private void updatePlayers() {
+		if(player1.getX() > BOARDX - player1.getWidth()/2) player1.setX(BOARDX - player1.getHeight()/2);
+		else if(player1.getX() < 0) player1.setY(0);
+		
+		float currentYVel = player1.getYVelocity();
+		float currentY = player1.getY();
+		// currentYVel = player1.getYVelocity();
+		
+		player1.setY(currentY + currentYVel * Gdx.graphics.getDeltaTime());
+		
+		if(player1.getY() > BOARDY - player1.getHeight()/2) {
+			player1.setYVelocity(0);
+			player1.setY(BOARDY - player1.getHeight()/2);
+		}
+		else if (player1.getY() <= 0) {
+			player1.setYVelocity(0);
+			player1.setY(0);
+			player1.setAirborne(false);
+		}
+		else {
+			// currentYVel = player1.getYVelocity();
+			// currentY = player1.getY();
+			player1.setYVelocity(currentYVel - GRAVITY * Gdx.graphics.getDeltaTime());
+		}
+	}
+	
+	public static int getBoardHeight() {
+		return BOARDY;
+	}
+	
+	public static int getBoardWidth() {
+		return BOARDX;
 	}
 }
