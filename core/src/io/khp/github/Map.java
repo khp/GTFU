@@ -51,7 +51,7 @@ public class Map {
 		return rectList;
 	}	
 	
-	public float collisionDetectionX(Rectangle playerRect) {
+	public float moveX(Rectangle playerRect) {
 		Rectangle intersection = new Rectangle();
 		for (Rectangle r : rectList) {
 			if (Intersector.intersectRectangles(playerRect, r, intersection)) {

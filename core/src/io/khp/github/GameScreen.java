@@ -174,8 +174,10 @@ public class GameScreen implements Screen{
 		// Update Player 1
 		float currentXVel = player1.getXVelocity();
 		float currentX = player1.getX();
+		Rectangle dummyR = player1.getRect();
+		dummyR.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
+		player1.getRect().setX(map.moveX(dummyR));
 		
-		player1.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
 		
 		if (player1.getX() > BOARDX - player1.getWidth() / 2)
 			player1.setX(BOARDX - player1.getHeight() / 2);
@@ -237,29 +239,7 @@ public class GameScreen implements Screen{
 	private void updateCollsions() {
 		
 		// check collision with wall
-		for (Rectangle r : map.getRectList()) {
-			if (Intersector.intersectRectangles(player1.getRect(), r, 
-					intersectionPlayer1)) {
-				player1.setXVelocity(0);
-				if (player1.getX() < intersectionPlayer1.getX()) {
-					player1.setX(player1.getX() - 1);
-				} else {
-					player1.setX(player1.getX() + 1);
-				}
-				
-			}
-			
-			if (Intersector.intersectRectangles(player2.getRect(), r, 
-					intersectionPlayer1)) {
-				player2.setXVelocity(0);
-				if (player2.getX() < intersectionPlayer1.getX()) {
-					player2.setX(player2.getX() - 1);
-				} else {
-					player2.setX(player2.getX() + 1);
-				}
-				
-			}
-		}
+		
 		
 		if (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
 			// player1.setXVelocity(0);
