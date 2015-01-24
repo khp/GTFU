@@ -15,7 +15,7 @@ public class JumpRenew {
 		 circle = new Circle();
 		 circle.radius = radius;
 		 circle.x = MainGame.getBoardHeight() / 3;
-		 circle.y = 150;
+		 circle.y = 50;
 	 }	 
 	 
 	 public Circle getCircle(){

@@ -1,5 +1,5 @@
 package io.khp.github;
 
-public class PlayerA {
-
+public class Collision {
+	
 }
