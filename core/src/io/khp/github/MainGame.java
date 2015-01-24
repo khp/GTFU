@@ -9,14 +9,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.files.FileHandle;
 
 public class MainGame extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private ShapeRenderer shapeRenderer;
 	private Texture img;
+	private FileHandle testMap;
 	private Player1 player1;
+	private MapDrawer mapDrawer;
 	
 	@Override
 	public void create () {
@@ -26,9 +30,11 @@ public class MainGame extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		img = new Texture("badlogic.jpg");
 		player1 = new Player1();
-		
-
+		testMap = Gdx.files.internal("testmap.png.jpg");
+		mapDrawer = new MapDrawer(testMap);
+		System.out.println();
 	}
+	
 
 	@Override
 	public void render () {

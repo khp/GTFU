@@ -16,7 +16,7 @@ public class Tile {
 	private TileType type;
 	// The enum is a type. We are assigning "type" to the enum TileType
 	
-	int WIDTH = 10;
+	int WIDTH = 20;
 	int HEIGHT = 10;
 	
     
