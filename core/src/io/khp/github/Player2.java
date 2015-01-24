@@ -28,7 +28,7 @@ public class Player2 {
 	}
 	
 	public void jump() {
-		this.yVelocity = 180f;
+		this.yVelocity = 500;
 		this.airborne = true;
 	}
 	

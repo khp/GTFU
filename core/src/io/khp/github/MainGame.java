@@ -143,12 +143,12 @@ public class MainGame extends ApplicationAdapter {
 		if (player2.getY() > BOARDY - player2.getHeight() / 2) {
 			player2.setYVelocity(0);
 			player2.setY(BOARDY - player2.getHeight() / 2);
-		} else if (player1.getY() <= 0) {
+		} else if (player2.getY() < 0) {
 			player2.setYVelocity(0);
 			player2.setY(0);
 			player2.setAirborne(false);
 		} else {
-			player2.setYVelocity(currentYVel - GRAVITY
+			player2.setYVelocity(currentYVel - 10 * GRAVITY
 					* Gdx.graphics.getDeltaTime());
 		}
 	}
