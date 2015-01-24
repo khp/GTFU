@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.files.FileHandle;
+
 
 public class MainGame extends ApplicationAdapter {
 	
@@ -20,6 +23,8 @@ public class MainGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private ShapeRenderer shapeRenderer;
 	private Player1 player1;
+	private FileHandle testMap;
+	private MapDrawer mapDrawer; 
 	
 	// sets up the game
 	@Override
