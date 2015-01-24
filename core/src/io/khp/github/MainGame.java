@@ -9,13 +9,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+
+import com.badlogic.gdx.math.*;
+
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.files.FileHandle;
 
 public class MainGame extends ApplicationAdapter {
 
-	public static final float GRAVITY = 100;
+	public static final float GRAVITY = 200;
 	private static final int BOARDX = 800;
 	private static final int BOARDY = 480;
 	
@@ -28,6 +33,11 @@ public class MainGame extends ApplicationAdapter {
 	
 	private FileHandle testMap;
 	private MapDrawer mapDrawer;
+	private JumpRenew jumprenew;
+	
+	private Rectangle intersectionPlayer1;
+	private Rectangle intersectionPlayer2;
+	private Rectangle intersectionPlayers;
 
 	// sets up the game
 	@Override
@@ -38,8 +48,14 @@ public class MainGame extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		
 		player1 = new Player1();
+		
+		jumprenew = new JumpRenew();
+		
 		player2 = new Player2();
-
+		intersectionPlayer1 = new Rectangle();
+		intersectionPlayer2 = new Rectangle();
+		intersectionPlayers = new Rectangle();
+		
 		testMap = Gdx.files.internal("testmap.png.jpg");
 		mapDrawer = new MapDrawer(testMap);
 		System.out.println();
@@ -68,6 +84,8 @@ public class MainGame extends ApplicationAdapter {
 		shapeRenderer.setColor(0, 1, 0, 1);
 		shapeRenderer.rect(player1.getX(), player1.getY(), player1.getWidth(),
 				player1.getHeight());
+		
+		shapeRenderer.circle(jumprenew.getX(), jumprenew.getY(), jumprenew.getRadius());
 
 		shapeRenderer.setColor(1, 0, 0, 0);
 		shapeRenderer.rect(player2.getX(), player2.getY(), player2.getWidth(),
@@ -80,11 +98,16 @@ public class MainGame extends ApplicationAdapter {
 
 	private void handleInput() {
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			player1.moveLeft();
+			// player1.moveLeft();
+			player1.setXVelocity(-player1.getSpeed());
 		}
-		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			player1.moveRight();
+		else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			player1.setXVelocity(player1.getSpeed());
 		}
+		else {
+			player1.setXVelocity(0);
+		}
+		
 		if (!player1.getAirborne()) {
 			if (Gdx.input.isKeyPressed(Keys.UP)) {
 				player1.jump();
@@ -92,10 +115,14 @@ public class MainGame extends ApplicationAdapter {
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.A)) {
-			player2.moveLeft();
+			// player2.moveLeft();
+			player2.setXVelocity(-player2.getSpeed());
 		}
-		if (Gdx.input.isKeyPressed(Keys.D)) {
-			player2.moveRight();
+		else if (Gdx.input.isKeyPressed(Keys.D)) {
+			player2.setXVelocity(player2.getSpeed());
+		}
+		else {
+			player2.setXVelocity(0);
 		}
 		if (!player2.getAirborne()) {
 			if (Gdx.input.isKeyPressed(Keys.W)) {
@@ -106,7 +133,15 @@ public class MainGame extends ApplicationAdapter {
 
 	private void updatePlayers() {
 		
+		// Update collisions
+		updateCollsions();
+		
 		// Update Player 1
+		float currentXVel = player1.getXVelocity();
+		float currentX = player1.getX();
+		
+		player1.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
+		
 		if (player1.getX() > BOARDX - player1.getWidth() / 2)
 			player1.setX(BOARDX - player1.getHeight() / 2);
 		else if (player1.getX() < 0)
@@ -120,16 +155,27 @@ public class MainGame extends ApplicationAdapter {
 		if (player1.getY() > BOARDY - player1.getHeight() / 2) {
 			player1.setYVelocity(0);
 			player1.setY(BOARDY - player1.getHeight() / 2);
-		} else if (player1.getY() <= 0) {
+		} else if (player1.getY() < 0) {
 			player1.setYVelocity(0);
 			player1.setY(0);
 			player1.setAirborne(false);
 		} else {
-			player1.setYVelocity(currentYVel - GRAVITY
+			player1.setYVelocity(currentYVel - 10 * GRAVITY
 					* Gdx.graphics.getDeltaTime());
 		}
+
+		// on collision the dot disappears and the players jump limit is increased by one.
+		if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
+			player1.setAirborne(false);
+		}
+		//}
 		
 		// Update Player 2
+		currentXVel = player2.getXVelocity();
+		currentX = player2.getX();
+		
+		player2.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
+		
 		if (player2.getX() > BOARDX - player2.getWidth() / 2)
 			player2.setX(BOARDX - player2.getHeight() / 2);
 		else if (player2.getX() < 0)
@@ -143,14 +189,36 @@ public class MainGame extends ApplicationAdapter {
 		if (player2.getY() > BOARDY - player2.getHeight() / 2) {
 			player2.setYVelocity(0);
 			player2.setY(BOARDY - player2.getHeight() / 2);
-		} else if (player1.getY() <= 0) {
+		} else if (player2.getY() < 0) {
 			player2.setYVelocity(0);
 			player2.setY(0);
 			player2.setAirborne(false);
 		} else {
-			player2.setYVelocity(currentYVel - GRAVITY
+			player2.setYVelocity(currentYVel - 10 * GRAVITY
 					* Gdx.graphics.getDeltaTime());
 		}
+	}
+
+	// Collision method
+	private void updateCollsions() {
+		if (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
+			player1.setXVelocity(0);
+			player2.setXVelocity(0);
+			
+			float player1X = player1.getX();
+			float player2X = player2.getX();
+			float displacement = intersectionPlayers.width / 2;
+			
+			if (player1.getX() > player2.getX()) {
+				player1.setX(player1X + displacement);
+				player2.setX(player2X - displacement);
+			}
+			else {
+				player1.setX(player1X - displacement);
+				player2.setX(player2X + displacement);
+			}
+		}
+		
 	}
 
 	public static int getBoardHeight() {
@@ -160,4 +228,5 @@ public class MainGame extends ApplicationAdapter {
 	public static int getBoardWidth() {
 		return BOARDX;
 	}
+
 }

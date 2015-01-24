@@ -6,8 +6,10 @@ import com.badlogic.gdx.math.Rectangle;
 public class Player2 {
 	private Rectangle rect;
 	private float yVelocity;
+	private float xVelocity;
 	private final int height = 24;
 	private final int width = 24;
+	private final int speed = 200;
 	private boolean airborne;
 	
 	public Player2() {
@@ -17,19 +19,16 @@ public class Player2 {
 		rect.x = MainGame.getBoardHeight() / 2 - rect.width / 2;
 		rect.y = 200;
 		yVelocity = 0;
-	}
-	
-	public void moveLeft() {
-		rect.x -= 200 * Gdx.graphics.getDeltaTime();
-	}
-	
-	public void moveRight() {
-		rect.x += 200 * Gdx.graphics.getDeltaTime();
+		xVelocity = 0;
 	}
 	
 	public void jump() {
-		this.yVelocity = 180f;
+		this.yVelocity = 500;
 		this.airborne = true;
+	}
+	
+	public Rectangle getRect() {
+		return this.rect;
 	}
 	
 	public float getX() {
@@ -62,6 +61,18 @@ public class Player2 {
 
 	public void setYVelocity(float yvel) {
 		this.yVelocity = yvel;
+	}
+	
+	public int getSpeed() {
+		return this.speed;
+	}
+	
+	public float getXVelocity() {
+		return this.xVelocity;
+	}
+	
+	public void setXVelocity(float xvel) {
+		this.xVelocity = xvel;
 	}
 	
 	public boolean getAirborne() {

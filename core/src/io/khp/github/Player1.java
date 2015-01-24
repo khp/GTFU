@@ -7,30 +7,29 @@ import com.badlogic.gdx.graphics.glutils.*;
 public class Player1 {
 	private Rectangle rect;
 	private float yVelocity;
+	private float xVelocity;
 	private final int height = 24;
 	private final int width = 24;
+	private final int speed = 200;
 	private boolean airborne;
 	
 	public Player1() {
 		rect = new Rectangle();
 		rect.width = height;
 		rect.height = width;
-		rect.x = MainGame.getBoardHeight() / 2 - rect.width / 2;
+		rect.x = MainGame.getBoardHeight() / 4 - rect.width / 2;
 		rect.y = 200;
 		yVelocity = 0;
-	}
-	
-	public void moveLeft() {
-		rect.x -= 200 * Gdx.graphics.getDeltaTime();
-	}
-	
-	public void moveRight() {
-		rect.x += 200 * Gdx.graphics.getDeltaTime();
+		xVelocity = 0;
 	}
 	
 	public void jump() {
-		this.yVelocity = 180f;
+		this.yVelocity = 500;
 		this.airborne = true;
+	}
+	
+	public Rectangle getRect() {
+		return this.rect;
 	}
 	
 	public float getX() {
@@ -57,12 +56,24 @@ public class Player1 {
 		return rect.height;
 	}
 	
+	public int getSpeed() {
+		return this.speed;
+	}
+	
 	public float getYVelocity() {
 		return this.yVelocity;
 	}
 
 	public void setYVelocity(float yvel) {
 		this.yVelocity = yvel;
+	}
+	
+	public float getXVelocity() {
+		return this.xVelocity;
+	}
+	
+	public void setXVelocity(float xvel) {
+		this.xVelocity = xvel;
 	}
 	
 	public boolean getAirborne() {
