@@ -198,9 +198,9 @@ public class MainGame extends ApplicationAdapter {
 
 	// Collision method
 	private void updateCollsions() {
-		while (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
-			player1.setXVelocity(0);
-			player2.setXVelocity(0);
+		if (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
+			// player1.setXVelocity(0);
+			// player2.setXVelocity(0);
 			
 			if (player1.getY() > player2.getY()) {
 				player1.setYVelocity(player2.getYVelocity());
