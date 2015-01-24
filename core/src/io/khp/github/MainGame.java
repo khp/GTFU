@@ -204,6 +204,19 @@ public class MainGame extends ApplicationAdapter {
 		if (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
 			player1.setXVelocity(0);
 			player2.setXVelocity(0);
+			
+			float player1X = player1.getX();
+			float player2X = player2.getX();
+			float displacement = intersectionPlayers.width / 2;
+			
+			if (player1.getX() > player2.getX()) {
+				player1.setX(player1X + displacement);
+				player2.setX(player2X - displacement);
+			}
+			else {
+				player1.setX(player1X - displacement);
+				player2.setX(player2X + displacement);
+			}
 		}
 		
 	}
