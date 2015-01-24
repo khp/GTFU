@@ -1,5 +1,7 @@
 package io.khp.github;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -34,6 +36,8 @@ public class MainGame extends Game {
 	private Rectangle intersectionPlayer1;
 	private Rectangle intersectionPlayer2;
 	private Rectangle intersectionPlayers;
+	
+	private Map map;
 
 	// sets up the game
 	@Override
@@ -46,12 +50,14 @@ public class MainGame extends Game {
 		
 		player1 = new Player1();
 		
-		// jumprenew = new JumpRenew();
+		jumprenew = new JumpRenew();
 		
 		player2 = new Player2();
 		intersectionPlayer1 = new Rectangle();
 		intersectionPlayer2 = new Rectangle();
 		intersectionPlayers = new Rectangle();
+		
+		map = new Map();
 		
 		testMap = Gdx.files.internal("testmap.png.jpg");
 		mapDrawer = new MapDrawer(testMap);
@@ -80,6 +86,13 @@ public class MainGame extends Game {
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		
 		shapeRenderer.begin(ShapeType.Filled);
+
+		//draw map from ArrayList of Rectangle
+		for (Rectangle r : map.getRectList()) {
+			shapeRenderer.setColor(0,0,1,1);
+			shapeRenderer.rect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+		}
+		
 		shapeRenderer.setColor(0, 1, 0, 1);
 		shapeRenderer.rect(player1.getX(), player1.getY(), player1.getWidth(),
 				player1.getHeight());
@@ -89,6 +102,7 @@ public class MainGame extends Game {
 		shapeRenderer.setColor(1, 0, 0, 0);
 		shapeRenderer.rect(player2.getX(), player2.getY(), player2.getWidth(),
 				player2.getHeight());
+		
 		shapeRenderer.end();
 		
 		batch.end();
@@ -97,7 +111,6 @@ public class MainGame extends Game {
 
 	private void handleInput() {
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			// player1.moveLeft();
 			player1.setXVelocity(-player1.getSpeed());
 		}
 		else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -114,7 +127,6 @@ public class MainGame extends Game {
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.A)) {
-			// player2.moveLeft();
 			player2.setXVelocity(-player2.getSpeed());
 		}
 		else if (Gdx.input.isKeyPressed(Keys.D)) {
@@ -164,12 +176,9 @@ public class MainGame extends Game {
 		}
 
 		// on collision the dot disappears and the players jump limit is increased by one.
-		/* if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
+		if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
 			player1.setAirborne(false);
 		}
-		//}
-		 * 
-		 */
 		
 		// Update Player 2
 		currentXVel = player2.getXVelocity();
@@ -202,14 +211,40 @@ public class MainGame extends Game {
 
 	// Collision method
 	private void updateCollsions() {
-		while (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
-			player1.setXVelocity(0);
-			player2.setXVelocity(0);
+		
+		// check collision with wall
+		for (Rectangle r : map.getRectList()) {
+			if (Intersector.intersectRectangles(player1.getRect(), r, 
+					intersectionPlayer1)) {
+				player1.setXVelocity(0);
+				if (player1.getX() < intersectionPlayer1.getX()) {
+					player1.setX(player1.getX() - 1);
+				} else {
+					player1.setX(player1.getX() + 1);
+				}
+				
+			}
+			
+			if (Intersector.intersectRectangles(player2.getRect(), r, 
+					intersectionPlayer1)) {
+				player2.setXVelocity(0);
+				if (player2.getX() < intersectionPlayer1.getX()) {
+					player2.setX(player2.getX() - 1);
+				} else {
+					player2.setX(player2.getX() + 1);
+				}
+				
+			}
+		}
+		
+		if (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
+			// player1.setXVelocity(0);
+			// player2.setXVelocity(0);
 			
 			if (player1.getY() > player2.getY()) {
 				player1.setYVelocity(player2.getYVelocity());
 			}
-			else if (player1.getY() < player2.getY()) {
+			else if (player1.getY() <= player2.getY()) {
 				player2.setYVelocity(player1.getYVelocity());
 			}
 			
@@ -226,13 +261,13 @@ public class MainGame extends Game {
 				
 				player1.setAirborne(false);
 			}
-			else if (player1Y < player2Y) {
+			else if (player1Y <= player2Y) {
 				// player1.setY(player1Y - yDisplacement);
 				player2.setY(player2Y + yDisplacement);
 				
 				player2.setAirborne(false);
 			}
-			else if (player1X > player2X) {
+			else if (player1X >= player2X) {
 				player1.setX(player1X + xDisplacement);
 				player2.setX(player2X - xDisplacement);
 			}
