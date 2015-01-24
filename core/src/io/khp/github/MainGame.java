@@ -69,6 +69,7 @@ public class MainGame extends ApplicationAdapter {
 		shapeRenderer.rect(player1.getX(), player1.getY(), player1.getWidth(),
 				player1.getHeight());
 
+		shapeRenderer.setColor(1, 0, 0, 0);
 		shapeRenderer.rect(player2.getX(), player2.getY(), player2.getWidth(),
 				player2.getHeight());
 		shapeRenderer.end();
