@@ -2,6 +2,7 @@ package io.khp.github;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Map {
@@ -49,4 +50,20 @@ public class Map {
 	public ArrayList<Rectangle> getRectList() {
 		return rectList;
 	}	
+	
+	public float collisionDetectionX(Rectangle playerRect) {
+		Rectangle intersection = new Rectangle();
+		for (Rectangle r : rectList) {
+			if (Intersector.intersectRectangles(playerRect, r, intersection)) {
+				if (intersection.getX() < (playerRect.getX() + playerRect.getWidth())) {
+					return intersection.getX(); // determine the left hand size of the intersect box
+					}
+				else if (playerRect.getX() < (intersection.getX() + intersection.getWidth()) ) {
+					return intersection.getX() + intersection.getWidth(); // determine the right side of the intersect box
+				}
+			
+			}
+		}
+		return playerRect.getX();
+	}
 }
