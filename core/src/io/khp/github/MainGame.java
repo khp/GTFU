@@ -87,11 +87,16 @@ public class MainGame extends ApplicationAdapter {
 
 	private void handleInput() {
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			player1.moveLeft();
+			// player1.moveLeft();
+			player1.setXVelocity(-player1.getSpeed());
 		}
-		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			player1.moveRight();
+		else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			player1.setXVelocity(player1.getSpeed());
 		}
+		else {
+			player1.setXVelocity(0);
+		}
+		
 		if (!player1.getAirborne()) {
 			if (Gdx.input.isKeyPressed(Keys.UP)) {
 				player1.jump();
@@ -99,10 +104,14 @@ public class MainGame extends ApplicationAdapter {
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.A)) {
-			player2.moveLeft();
+			// player2.moveLeft();
+			player2.setXVelocity(-player2.getSpeed());
 		}
-		if (Gdx.input.isKeyPressed(Keys.D)) {
-			player2.moveRight();
+		else if (Gdx.input.isKeyPressed(Keys.D)) {
+			player2.setXVelocity(player2.getSpeed());
+		}
+		else {
+			player2.setXVelocity(0);
 		}
 		if (!player2.getAirborne()) {
 			if (Gdx.input.isKeyPressed(Keys.W)) {
@@ -114,6 +123,11 @@ public class MainGame extends ApplicationAdapter {
 	private void updatePlayers() {
 		
 		// Update Player 1
+		float currentXVel = player1.getXVelocity();
+		float currentX = player1.getX();
+		
+		player1.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
+		
 		if (player1.getX() > BOARDX - player1.getWidth() / 2)
 			player1.setX(BOARDX - player1.getHeight() / 2);
 		else if (player1.getX() < 0)
@@ -137,6 +151,11 @@ public class MainGame extends ApplicationAdapter {
 		}
 		
 		// Update Player 2
+		currentXVel = player2.getXVelocity();
+		currentX = player2.getX();
+		
+		player2.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
+		
 		if (player2.getX() > BOARDX - player2.getWidth() / 2)
 			player2.setX(BOARDX - player2.getHeight() / 2);
 		else if (player2.getX() < 0)

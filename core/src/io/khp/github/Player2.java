@@ -9,6 +9,7 @@ public class Player2 {
 	private float xVelocity;
 	private final int height = 24;
 	private final int width = 24;
+	private final int speed = 200;
 	private boolean airborne;
 	
 	public Player2() {
@@ -19,14 +20,6 @@ public class Player2 {
 		rect.y = 200;
 		yVelocity = 0;
 		xVelocity = 0;
-	}
-	
-	public void moveLeft() {
-		rect.x -= 200 * Gdx.graphics.getDeltaTime();
-	}
-	
-	public void moveRight() {
-		rect.x += 200 * Gdx.graphics.getDeltaTime();
 	}
 	
 	public void jump() {
@@ -68,6 +61,10 @@ public class Player2 {
 
 	public void setYVelocity(float yvel) {
 		this.yVelocity = yvel;
+	}
+	
+	public int getSpeed() {
+		return this.speed;
 	}
 	
 	public float getXVelocity() {
