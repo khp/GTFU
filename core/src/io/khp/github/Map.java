@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Map {
 	
-	private ArrayList<Tile> tileArray;
+	private Tile[][] tileArray;
 	private int tileHeight;
 	private int tileWidth;
 
@@ -15,15 +15,28 @@ public class Map {
 		
 	}
 	
+	
+	// initialize test map
 	Map () {
-		tileArray = new ArrayList();
-		tileWidth = 24;
-		tileHeight = 40;
-		for (int i = 0; i < 24 * 40; i++) {
-			tileArray.add(new Tile(TileType.EMPTY, 0, 0));
+
+		tileWidth = 26;
+		tileHeight = 41;
+		
+		tileArray[tileWidth+1][tileHeight+1];
+		
+		for (int i = 0; i <= tileWidth; i++) {
+			for (int j = 0; j <= tileHeight; j++){
+				if(i == 0 || i == tileWidth || j == 0 || j == tileHeight) {
+					tileArray[i][j] = new Tile(TileType.WALL, 
+							(i - 1)*20, (j - 1)*20);
+				} else {
+					tileArray[i][j] = new Tile(TileType.EMPTY, 
+							(i - 1)*20, (j - 1)*20);
+				}
+			}
 		}
-		tileArray.get(24*40-1).setType(TileType.WALL);
-		tileArray.get(24*40-2).setType(TileType.WALL);
+		tileArray[24][24].setType(TileType.WALL);
+		tileArray[23][23].setType(TileType.WALL);
 	}
 	
 	
