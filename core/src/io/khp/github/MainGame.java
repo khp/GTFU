@@ -47,10 +47,12 @@ public class MainGame extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		
 		player1 = new Player1();
+		player1.setY(0);
 		
 		jumprenew = new JumpRenew();
 		
 		player2 = new Player2();
+		player2.setY(0);
 		intersectionPlayer1 = new Rectangle();
 		intersectionPlayer2 = new Rectangle();
 		intersectionPlayers = new Rectangle();
@@ -68,8 +70,10 @@ public class MainGame extends ApplicationAdapter {
 	@Override
 	public void render() {
 		handleInput();
-		updatePlayers();
+		
 		draw();
+		
+		updatePlayers();
 	}
 
 	//
@@ -216,18 +220,37 @@ public class MainGame extends ApplicationAdapter {
 				if (player1.getX() < intersectionPlayer1.getX()) {
 					player1.setX(player1.getX() - 1);
 				} else {
-					player1.setX(player1.getX() + r.getWidth() + 1);
+					player1.setX(player1.getX() + 1);
 				}
 				
 			}
 			
 			if (Intersector.intersectRectangles(player2.getRect(), r, 
-					intersectionPlayer1)) {
+					intersectionPlayer2)) {
 				player2.setXVelocity(0);
-				if (player2.getX() < intersectionPlayer1.getX()) {
+				if (player2.getX() < intersectionPlayer2.getX()) {
 					player2.setX(player2.getX() - 1);
 				} else {
 					player2.setX(player2.getX() + 1);
+				}
+				
+			}
+			if (Intersector.intersectRectangles(player1.getRect(), r, 
+					intersectionPlayer1)) {
+				player1.setYVelocity(0);
+				if (player1.getY() < intersectionPlayer1.getY()) {
+					player1.setY(player1.getY() - 1);
+				} else {
+					player1.setY(player1.getY() + 1);
+				}
+			}
+			if (Intersector.intersectRectangles(player2.getRect(), r, 
+					intersectionPlayer1)) {
+				player2.setYVelocity(0);
+				if (player2.getY() < intersectionPlayer2.getY()) {
+					player2.setY(player2.getY() - 1);
+				} else {
+					player2.setY(player2.getY() + 1);
 				}
 				
 			}
