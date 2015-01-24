@@ -210,7 +210,9 @@ public class GameScreen implements Screen{
 		currentXVel = player2.getXVelocity();
 		currentX = player2.getX();
 		
-		player2.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
+		dummyR = player2.getRect();
+		dummyR.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
+		player2.getRect().setX(map.moveX(dummyR));
 		
 		if (player2.getX() > BOARDX - player2.getWidth() / 2)
 			player2.setX(BOARDX - player2.getHeight() / 2);
