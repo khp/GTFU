@@ -26,7 +26,7 @@ public class MapDrawer {
 				else if (colourCode == BLACK){
 					tempTileType = TileType.EMPTY;
 				}
-				translatedTileMap[x][y] = new Tile(tempTileType, y*Tile.WIDTH, x*Tile.HEIGHT);
+				translatedTileMap[y][x] = new Tile(tempTileType, y*Tile.WIDTH, x*Tile.HEIGHT);
 				
 			}
 		}
