@@ -8,11 +8,8 @@ public class Map {
 	private int tileHeight;
 	private int tileWidth;
 
-	Map (int pxWidth, int pxHeight, int pxTileWidth, int pxTileHeight, 
-			Tile[][] tileArray) {
-		this.tileHeight = pxHeight/pxTileHeight;
-		this.tileWidth = pxWidth/pxTileWidth;
-		
+	Map (Tile[][] tileArray) {
+		this.tileArray = tileArray;
 	}
 	
 	
