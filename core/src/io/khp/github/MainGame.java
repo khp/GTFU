@@ -122,6 +122,9 @@ public class MainGame extends ApplicationAdapter {
 
 	private void updatePlayers() {
 		
+		// Update collisions
+		updateCollsions();
+		
 		// Update Player 1
 		float currentXVel = player1.getXVelocity();
 		float currentX = player1.getX();
@@ -177,9 +180,6 @@ public class MainGame extends ApplicationAdapter {
 			player2.setYVelocity(currentYVel - 10 * GRAVITY
 					* Gdx.graphics.getDeltaTime());
 		}
-		
-		// Update collisions
-		updateCollsions();
 	}
 
 	// Collision method
