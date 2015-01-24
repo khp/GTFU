@@ -42,7 +42,7 @@ public class MainGame extends Game {
 	// sets up the game
 	@Override
 	public void create() {
-		setScreen(new MainMenu(this));
+		//setScreen(new MainMenu(this));
 		camera = new OrthographicCamera(); // init camera
 		camera.setToOrtho(false, BOARDX, BOARDY);
 		batch = new SpriteBatch();
