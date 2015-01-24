@@ -3,6 +3,7 @@ package io.khp.github;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,7 +16,7 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.files.FileHandle;
 
-public class MainGame extends ApplicationAdapter {
+public class MainGame extends Game {
 
 	public static final float GRAVITY = 200;
 	private static final int BOARDX = 800;
@@ -41,6 +42,7 @@ public class MainGame extends ApplicationAdapter {
 	// sets up the game
 	@Override
 	public void create() {
+		//setScreen(new MainMenu(this));
 		camera = new OrthographicCamera(); // init camera
 		camera.setToOrtho(false, BOARDX, BOARDY);
 		batch = new SpriteBatch();
@@ -63,6 +65,8 @@ public class MainGame extends ApplicationAdapter {
 		mapDrawer = new MapDrawer(testMap);
 		System.out.println();
 	}
+	
+	
 
 	// Analogous to main - Handles inputs, updates player coordinates / physics
 	// and
