@@ -3,7 +3,7 @@ package io.khp.github;
 import com.badlogic.gdx.math.Rectangle;
 
 
-public class Tile {
+public class Tile implements Collidable {
 	
 	private int x;
 	private int y;
@@ -52,6 +52,8 @@ public class Tile {
 	public void setType(TileType type) {
 		this.type = type;
 	}
+	
+	public void checkCollisions(Player player){}
     
 	
 	

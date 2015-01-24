@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.*;
 
 // 
 
-public class JumpRenew {
+public class JumpRenew implements Collidable{
 	
 	 private Circle circle;
 	 private final int radius = 10;
@@ -31,5 +31,11 @@ public class JumpRenew {
 	 }
 	 public float getRadius(){
 		 return circle.radius;
+	 }
+	 
+	 public void checkCollisions(Player player){
+		 if (Intersector.overlaps(this.getCircle(), player.getRect())){
+				player.setAirborne(false);
+			}
 	 }
 }

@@ -33,6 +33,8 @@ public class GameScreen implements Screen{
 	
 	Skin skin;
 	Stage stage;
+	
+	Collidable collidableObjects[];
 
 	MainGame g;
 
@@ -145,7 +147,7 @@ public class GameScreen implements Screen{
 		}
 		
 		if (!player1.getAirborne()) {
-			if (Gdx.input.isKeyPressed(Keys.UP)) {
+			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				player1.jump();
 			}
 		}
@@ -160,7 +162,7 @@ public class GameScreen implements Screen{
 			player2.setXVelocity(0);
 		}
 		if (!player2.getAirborne()) {
-			if (Gdx.input.isKeyPressed(Keys.W)) {
+			if (Gdx.input.isKeyJustPressed(Keys.W)) {
 				player2.jump();
 			}
 		}
@@ -202,9 +204,8 @@ public class GameScreen implements Screen{
 		}
 
 		// on collision the dot disappears and the players jump limit is increased by one.
-		if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
-			player1.setAirborne(false);
-		}
+		jumprenew.checkCollisions(player1);
+		jumprenew.checkCollisions(player2);
 		
 		// Update Player 2
 		currentXVel = player2.getXVelocity();
