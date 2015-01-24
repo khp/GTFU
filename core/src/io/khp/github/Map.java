@@ -2,44 +2,51 @@ package io.khp.github;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Rectangle;
+
 public class Map {
 	
 	private Tile[][] tileArray;
+	private ArrayList<Rectangle> rectList;
 	private int tileHeight;
 	private int tileWidth;
 
-	Map (Tile[][] tileArray) {
+	public Map (Tile[][] tileArray) {
 		this.tileArray = tileArray;
 	}
 	
 	
 	// initialize test map
-	Map () {
+	public Map () {
 
-		tileWidth = 26;
-		tileHeight = 41;
+		tileWidth = 41;
+		tileHeight = 26;
 		
 		tileArray = new Tile[tileWidth + 1][tileHeight + 1];
+		rectList = new ArrayList<Rectangle>();
 		
 		for (int i = 0; i <= tileWidth; i++) {
 			for (int j = 0; j <= tileHeight; j++){
-				if(i == 0 || i == tileWidth || j == 0 || j == tileHeight) {
+				if(i == 0 || i == tileWidth || j == 0 || j == tileHeight
+						|| i == 10) {
 					tileArray[i][j] = new Tile(TileType.WALL, 
-							(i - 1)*20, (j - 1)*20);
+							i, j-1);
 				} else {
 					tileArray[i][j] = new Tile(TileType.EMPTY, 
-							(i - 1)*20, (j - 1)*20);
+							i, j-1);
 				}
 			}
 		}
-		tileArray[24][24].setType(TileType.WALL);
-		tileArray[23][23].setType(TileType.WALL);
+		for (int i = 0; i <= tileWidth; i++) {
+			for (int j = 0; j <= tileHeight; j++) {
+				if (tileArray[i][j].getType() == TileType.WALL) {
+					rectList.add(tileArray[i][j].getRectangle());
+				}
+			}
+		}
 	}
 	
-	
-	
-	
-	
-	
-	
+	public ArrayList<Rectangle> getRectList() {
+		return rectList;
+	}	
 }
