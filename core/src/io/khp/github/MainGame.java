@@ -29,6 +29,10 @@ public class MainGame extends ApplicationAdapter {
 		batch = new SpriteBatch(); 
 		shapeRenderer = new ShapeRenderer();
 		player1 = new Player1();
+
+		testMap = Gdx.files.internal("testmap.png.jpg");
+		mapDrawer = new MapDrawer(testMap);
+		System.out.println();
 	}
 	// Analogous to main - Handles inputs, updates player coordinates / physics and
 	//                     Draw to board.
