@@ -11,7 +11,7 @@ public class Player2 extends Player {
 		rect = new Rectangle();
 		rect.width = height;
 		rect.height = width;
-		rect.x = GameScreen.getBoardHeight() / 2 - rect.width / 2;
+		rect.x = GameScreen.getBoardHeight() / 2 - rect.width / 2 + 100;
 		rect.y = 200;
 		this.setRect(rect);
 	}

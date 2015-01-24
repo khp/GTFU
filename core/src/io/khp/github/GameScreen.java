@@ -178,7 +178,6 @@ public class GameScreen implements Screen{
 		dummyR.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
 		player1.getRect().setX(map.moveX(dummyR));
 		
-		
 		if (player1.getX() > BOARDX - player1.getWidth() / 2)
 			player1.setX(BOARDX - player1.getHeight() / 2);
 		else if (player1.getX() < 0)
@@ -186,8 +185,9 @@ public class GameScreen implements Screen{
 
 		float currentYVel = player1.getYVelocity();
 		float currentY = player1.getY();
-
-		player1.setY(currentY + currentYVel * Gdx.graphics.getDeltaTime());
+		dummyR = player1.getRect();
+		dummyR.setY(currentY + currentYVel * Gdx.graphics.getDeltaTime());
+		player1.getRect().setY(map.moveY(dummyR));
 
 		if (player1.getY() > BOARDY - player1.getHeight() / 2) {
 			player1.setYVelocity(0);
@@ -196,9 +196,11 @@ public class GameScreen implements Screen{
 			player1.setYVelocity(0);
 			player1.setY(0);
 			player1.setAirborne(false);
-		} else {
+		} else if (player1.getYVelocity() > -100) {
 			player1.setYVelocity(currentYVel - 10 * GRAVITY
 					* Gdx.graphics.getDeltaTime());
+		} else {
+			player1.setYVelocity(-100);
 		}
 
 		// on collision the dot disappears and the players jump limit is increased by one.
