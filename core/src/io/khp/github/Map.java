@@ -30,6 +30,7 @@ public class Map {
 			for (int j = 0; j <= tileHeight; j++){
 				if(i == 0 || i == tileWidth || j == 0 || j == tileHeight
 						|| i == 2 || i == 30 || j == 3) {
+
 					tileArray[i][j] = new Tile(TileType.WALL, 
 							i, j-1);
 				} else {
