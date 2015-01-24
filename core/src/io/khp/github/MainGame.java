@@ -107,7 +107,6 @@ public class MainGame extends ApplicationAdapter {
 
 	private void handleInput() {
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			// player1.moveLeft();
 			player1.setXVelocity(-player1.getSpeed());
 		}
 		else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
@@ -124,7 +123,6 @@ public class MainGame extends ApplicationAdapter {
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.A)) {
-			// player2.moveLeft();
 			player2.setXVelocity(-player2.getSpeed());
 		}
 		else if (Gdx.input.isKeyPressed(Keys.D)) {
@@ -177,7 +175,6 @@ public class MainGame extends ApplicationAdapter {
 		if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
 			player1.setAirborne(false);
 		}
-		//}
 		
 		// Update Player 2
 		currentXVel = player2.getXVelocity();
@@ -237,20 +234,42 @@ public class MainGame extends ApplicationAdapter {
 		}
 		
 		if (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
-			player1.setXVelocity(0);
-			player2.setXVelocity(0);
+			// player1.setXVelocity(0);
+			// player2.setXVelocity(0);
+			
+			if (player1.getY() > player2.getY()) {
+				player1.setYVelocity(player2.getYVelocity());
+			}
+			else if (player1.getY() <= player2.getY()) {
+				player2.setYVelocity(player1.getYVelocity());
+			}
 			
 			float player1X = player1.getX();
+			float player1Y = player1.getY();
 			float player2X = player2.getX();
-			float displacement = intersectionPlayers.width / 2;
+			float player2Y = player2.getY();
+			float xDisplacement = intersectionPlayers.width / 2;
+			float yDisplacement = intersectionPlayers.height / 2;
 			
-			if (player1.getX() > player2.getX()) {
-				player1.setX(player1X + displacement);
-				player2.setX(player2X - displacement);
+			if (player1Y > player2Y) {
+				player1.setY(player1Y + yDisplacement);
+				// player2.setY(player2Y - yDisplacement);
+				
+				player1.setAirborne(false);
+			}
+			else if (player1Y <= player2Y) {
+				// player1.setY(player1Y - yDisplacement);
+				player2.setY(player2Y + yDisplacement);
+				
+				player2.setAirborne(false);
+			}
+			else if (player1X >= player2X) {
+				player1.setX(player1X + xDisplacement);
+				player2.setX(player2X - xDisplacement);
 			}
 			else {
-				player1.setX(player1X - displacement);
-				player2.setX(player2X + displacement);
+				player1.setX(player1X - xDisplacement);
+				player2.setX(player2X + xDisplacement);
 			}
 		}
 		
