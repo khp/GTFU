@@ -265,10 +265,10 @@ public class GameScreen implements Screen{
 			// player1.setXVelocity(0);
 			// player2.setXVelocity(0);
 			
-			if (player1.getY() > player2.getY()) {
+			if (player1.getY() > player2.getY() && player2.getYVelocity() != 0) {
 				player1.setYVelocity(player2.getYVelocity());
 			}
-			else if (player1.getY() <= player2.getY()) {
+			else if (player1.getY() <= player2.getY() && player1.getYVelocity() != 0) {
 				player2.setYVelocity(player1.getYVelocity());
 			}
 			
