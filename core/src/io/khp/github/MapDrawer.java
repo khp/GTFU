@@ -4,27 +4,29 @@ import com.badlogic.gdx.files.FileHandle;
 
 public class MapDrawer {
 	private Pixmap map;
-	private Tile[][] translatedMap;
+	private Tile[][] translatedTileMap;
 	private int WHITE = -1;
 	private int BLACK = 255;
 			
 	
+	
+	
 	public MapDrawer(FileHandle file){
 		map = new Pixmap (file);
-		TileType tempTile = null;
+		TileType tempTileType = null;
 		int height = map.getHeight();
 		int width = map.getWidth(); 
-		translatedMap = new Tile[height][width];
-		for(int i = 0; i < height; i++){
-			for (int j = 0; j < width; j++){
-				int colourCode = map.getPixel(j, i);
+		translatedTileMap = new Tile[height][width];
+		for(int y = 0; y < height; y++){
+			for (int x = 0; x < width; x++){
+				int colourCode = map.getPixel(y, x);
 				if (colourCode == WHITE){
-					tempTile = TileType.WALL;
+					tempTileType = TileType.WALL;
 				}
 				else if (colourCode == BLACK){
-					tempTile = TileType.EMPTY;
+					tempTileType = TileType.EMPTY;
 				}
-				translatedMap[i][j] = new Tile(tempTile, j*20, i*20);
+				translatedTileMap[x][y] = new Tile(tempTileType, y*Tile.WIDTH, x*Tile.HEIGHT);
 				
 			}
 		}

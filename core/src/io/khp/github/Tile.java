@@ -1,14 +1,6 @@
 package io.khp.github;
 
 
-enum TileType{
-	END,
-	STARTA,
-	STARTB,
-	EMPTY,
-	WALL
-}
-
 public class Tile {
 	
 	private int x;
@@ -18,8 +10,8 @@ public class Tile {
 	// The enum is a type. We are assigning "type" to the enum TileType
 	
 
-	final int WIDTH = 20;
-	final int HEIGHT = 20;
+	final static int WIDTH = 20;
+	final static int HEIGHT = 20;
 	
     
 	

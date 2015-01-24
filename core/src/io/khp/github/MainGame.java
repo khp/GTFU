@@ -81,7 +81,8 @@ public class MainGame extends ApplicationAdapter {
 
 	
 	private void updatePlayers() {
-		if(player1.getX() > BOARDX - player1.getWidth()/2) player1.setX(BOARDX - player1.getHeight()/2);
+		if(player1.getX() > BOARDX - player1.getWidth()/2)
+			player1.setX(BOARDX - player1.getHeight()/2);
 		else if(player1.getX() < 0) player1.setY(0);
 		
 		float currentYVel = player1.getYVelocity();
