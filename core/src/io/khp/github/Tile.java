@@ -14,10 +14,11 @@ public class Tile {
 	private int x;
 	private int y;
 	private TileType type;
+	private boolean collision; 
 	// The enum is a type. We are assigning "type" to the enum TileType
 	
-	int WIDTH = 10;
-	int HEIGHT = 10;
+	final int WIDTH = 10;
+	final int HEIGHT = 10;
 	
     
 	
@@ -41,6 +42,13 @@ public class Tile {
 		return this.y;
 	}
 			
+	public boolean checkCollision() {
+		return collision;
+	}
+	
+	public void setType(TileType type) {
+		this.type = type;
+	}
     
 	
 	
