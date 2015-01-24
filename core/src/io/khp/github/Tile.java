@@ -1,5 +1,7 @@
 package io.khp.github;
 
+import com.badlogic.gdx.math.Rectangle;
+
 
 public class Tile {
 	
@@ -8,6 +10,7 @@ public class Tile {
 	private TileType type;
 	private boolean collision; 
 	// The enum is a type. We are assigning "type" to the enum TileType
+	private Rectangle rect;
 	
 
 	final static int WIDTH = 20;
@@ -19,8 +22,15 @@ public class Tile {
 	
 	public Tile(TileType type, int x, int y){
 		this.type = type;
+		if (this.type == TileType.WALL) {
+			this.rect = new Rectangle(x*20, (y + 1)*20, 20, 20);
+		}
 		this.x = x;
 		this.y = y;
+	}
+	
+	public Rectangle getRectangle() {
+		return this.rect;
 	}
 	
 	public TileType getType(){
