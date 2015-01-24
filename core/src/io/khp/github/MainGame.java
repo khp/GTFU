@@ -70,9 +70,7 @@ public class MainGame extends ApplicationAdapter {
 	@Override
 	public void render() {
 		handleInput();
-		
 		draw();
-		
 		updatePlayers();
 	}
 
