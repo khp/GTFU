@@ -216,7 +216,7 @@ public class MainGame extends ApplicationAdapter {
 				if (player1.getX() < intersectionPlayer1.getX()) {
 					player1.setX(player1.getX() - 1);
 				} else {
-					player1.setX(player1.getX() + r.getWidth() + 1);
+					player1.setX(player1.getX() + 1);
 				}
 				
 			}
