@@ -30,7 +30,6 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class GameScreen implements Screen{
 	
-	
 	Skin skin;
 	Stage stage;
 
@@ -57,11 +56,6 @@ public class GameScreen implements Screen{
 	private Rectangle intersectionPlayers;
 	
 	private Map map;
-
-	
-	
-	
-	
 	
 	public GameScreen(MainGame g) {
 		create();
@@ -81,25 +75,21 @@ public class GameScreen implements Screen{
 			camera.setToOrtho(false, BOARDX, BOARDY);
 			shapeRenderer = new ShapeRenderer();
 			
+			// set up the players and their intersections
 			player1 = new Player1();
+			player2 = new Player2();
+			intersectionPlayer1 = new Rectangle();
+			intersectionPlayer2 = new Rectangle();
+			intersectionPlayers = new Rectangle();
 			
-			
+			// set up the jumprenews
 			renewButtons = new JumpRenew[6];
-			
 			renewButtons[0] = new JumpRenew (100, 100);
 			renewButtons[1] = new JumpRenew (100, 200);
 			renewButtons[2] = new JumpRenew (100, 300);
 			renewButtons[3] = new JumpRenew (100, 400);
 			renewButtons[4] = new JumpRenew (100, 500);
 			renewButtons[5] = new JumpRenew (100, 600);
-			
-			
-			player2 = new Player2();
-			intersectionPlayer1 = new Rectangle();
-			intersectionPlayer2 = new Rectangle();
-			intersectionPlayers = new Rectangle();
-			
-			
 			
 			testMap = Gdx.files.internal("level0.bmp");
 			mapDrawer = new MapDrawer(testMap);
@@ -134,6 +124,8 @@ public class GameScreen implements Screen{
 				}
 			}
 		}
+		
+		// render the players and jumprenews
 		shapeRenderer.setColor(0, 1, 0, 1);
 		shapeRenderer.rect(player1.getX(), player1.getY(), player1.getWidth(),
 				player1.getHeight());
@@ -193,24 +185,33 @@ public class GameScreen implements Screen{
 		updateCollsions();
 		
 		// Update Player 1
+		// Get player 1's x position and velocity
 		float currentXVel = player1.getXVelocity();
 		float currentX = player1.getX();
 		
+		// Check for map collisions, then move player 1 horizontally
 		Rectangle dummyR = player1.getRect();
 		dummyR.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
 		player1.getRect().setX(map.moveX(dummyR));
 		
+		// Keep the player in the horizontal bounds of the map
 		if (player1.getX() > BOARDX - player1.getWidth() / 2)
 			player1.setX(BOARDX - player1.getHeight() / 2);
 		else if (player1.getX() < 0)
 			player1.setX(0);
 
+		// Get player 1's y position and velocity
 		float currentYVel = player1.getYVelocity();
 		float currentY = player1.getY();
+		
+		// Check for map collisions, then move player 1 vertically
 		dummyR = player1.getRect();
 		dummyR.setY(currentY + currentYVel * Gdx.graphics.getDeltaTime());
 		player1.getRect().setY(map.moveY(dummyR, player1));
 
+		// Keep the player in the vertical bounds off the map
+		// Set the player's Airborne flag to false if they hit the bottom of the screen
+		// Cap the player's fall speed to terminal velocity if it exceeds it, otherwise accelerate by gravity
 		if (player1.getY() > BOARDY - player1.getHeight() / 2) {
 			player1.setYVelocity(0);
 			player1.setY(BOARDY - player1.getHeight() / 2);
@@ -224,33 +225,35 @@ public class GameScreen implements Screen{
 		} else {
 			player1.setYVelocity(terminalVel);
 		}
-
-		// on collision the dot disappears and the players jump limit is increased by one.
-		/*
-		 * if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
-			player1.setAirborne(false);
-		}
-		*/
 		
 		// Update Player 2
+		// Get player 2's current x position and velocity
 		currentXVel = player2.getXVelocity();
 		currentX = player2.getX();
 		
+		// Check for map collisions then move player 2 horizontally
 		dummyR = player2.getRect();
 		dummyR.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
 		player2.getRect().setX(map.moveX(dummyR));
 		
+		// Keep player 2 in the horizontal bounds off the screen
 		if (player2.getX() > BOARDX - player2.getWidth() / 2)
 			player2.setX(BOARDX - player2.getHeight() / 2);
 		else if (player2.getX() < 0)
 			player2.setX(0);
 
+		// Get player 2's current y position and velocity
 		currentYVel = player2.getYVelocity();
 		currentY = player2.getY();
+		
+		// Check for map collisions then move player 2 vertically
 		dummyR = player2.getRect();
 		dummyR.setY(currentY + currentYVel * Gdx.graphics.getDeltaTime());
 		player2.getRect().setY(map.moveY(dummyR, player2));
 
+		// Keep player 2 in the horizontal bounds off the screen
+		// Set player 2's airborne flag to false if they hit the bottom of the screen
+		// Cap the player's fall speed to terminal velocity, otherwise accelerate due to gravity
 		if (player2.getY() > BOARDY - player2.getHeight() / 2) {
 			player2.setYVelocity(0);
 			player2.setY(BOARDY - player2.getHeight() / 2);
@@ -265,6 +268,7 @@ public class GameScreen implements Screen{
 			player2.setYVelocity(terminalVel);
 		}
 		
+		// Renew the player's jump if they hit a JumpRenew
 		for (JumpRenew jumper : renewButtons) {
 			jumper.checkCollisions(player1);
 			jumper.checkCollisions(player2);
@@ -274,39 +278,38 @@ public class GameScreen implements Screen{
 	// Collision method
 	private void updateCollsions() {
 		
-		// check collision with wall
-		
-		
+		// check collisions between players
 		if (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
-			// player1.setXVelocity(0);
-			// player2.setXVelocity(0);
 			
+			// If player 1 is above player 2 when they collide:
+			// Set player 1's y-velocity to player 2's
 			if (player1.getY() > player2.getY() && player2.getYVelocity() != terminalVel) {
 				player1.setYVelocity(player2.getYVelocity());
 			}
+			// Vice versa if player 2 is above player 1
 			else if (player1.getY() <= player2.getY() && player2.getYVelocity() != terminalVel) {
 				player2.setYVelocity(player1.getYVelocity());
 			}
 			
+			// Get the positions of the 2 players, as well as the magnitude of their overlap
 			float player1X = player1.getX();
 			float player1Y = player1.getY();
 			float player2X = player2.getX();
 			float player2Y = player2.getY();
-			float xDisplacement = intersectionPlayers.width /2;
+			float xDisplacement = intersectionPlayers.width / 2;
 			float yDisplacement = intersectionPlayers.height / 2;
 			
+			// If player 1 is above player 2, displace player 1 up and refresh jump
 			if (player1Y > player2Y) {
 				player1.setY(player1Y + yDisplacement * 2);
-				// player2.setY(player2Y - yDisplacement);
-				
 				player1.setAirborne(false);
 			}
+			// If player 2 is above player 2, displace player 2 up and refresh jump
 			else if (player1Y < player2Y) {
-				// player1.setY(player1Y - yDisplacement);
 				player2.setY(player2Y + yDisplacement * 2);
-				
 				player2.setAirborne(false);
 			}
+			// If player 1 is on player 2's right, displace them both in the appropriate direction
 			else if (player1X > player2X) {
 				player1.setX(player1X + xDisplacement);
 				player2.setX(player2X - xDisplacement);
