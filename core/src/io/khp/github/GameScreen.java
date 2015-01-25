@@ -57,35 +57,40 @@ public class GameScreen implements Screen{
 		Gdx.input.setInputProcessor(stage);
 
 		//setScreen(new MainMenu(this));
-			camera = new OrthographicCamera(); // init camera
-			camera.setToOrtho(false, BOARDX, BOARDY);
-			shapeRenderer = new ShapeRenderer();
+		camera = new OrthographicCamera(); // init camera
+		camera.setToOrtho(false, BOARDX, BOARDY);
+		shapeRenderer = new ShapeRenderer();
 
 			
-			// set up the jumprenews
-			renewButtons = new JumpRenew[6];
-			renewButtons[0] = new JumpRenew (100, 100);
-			renewButtons[1] = new JumpRenew (100, 200);
-			renewButtons[2] = new JumpRenew (100, 300);
-			renewButtons[3] = new JumpRenew (100, 400);
-			renewButtons[4] = new JumpRenew (100, 500);
-			renewButtons[5] = new JumpRenew (100, 600);
+		// set up the jumprenews
+		renewButtons = new JumpRenew[6];
+		renewButtons[0] = new JumpRenew (100, 100);
+		renewButtons[1] = new JumpRenew (100, 200);
+		renewButtons[2] = new JumpRenew (100, 300);
+		renewButtons[3] = new JumpRenew (100, 400);
+		renewButtons[4] = new JumpRenew (100, 500);
+		renewButtons[5] = new JumpRenew (100, 600);
 			
-			testMap = Gdx.files.internal("level0.bmp");
-			mapDrawer = new MapDrawer(testMap);
-			map = new Map(mapDrawer.getTranslatedTileMap());
+		setUpLevel("level0.bmp");
 			
-			// set up the players and their intersections
-			player1 = new Player1(map.findStartA());
-			player2 = new Player2(map.findStartB());
-			players = new Player[2];
-			players[0] = player1;
-			players[1] = player2;
+		intersectionPlayers = new Rectangle();
 			
-			intersectionPlayers = new Rectangle();
-			
-			System.out.println();
-		}
+		System.out.println();
+	}
+	
+	public void setUpLevel(String level) {
+		// Set up the map
+		testMap = Gdx.files.internal(level);
+		mapDrawer = new MapDrawer(testMap);
+		map = new Map(mapDrawer.getTranslatedTileMap());
+		
+		// Set up the players on the map
+		player1 = new Player1(map.findStartA());
+		player2 = new Player2(map.findStartB());
+		players = new Player[2];
+		players[0] = player1;
+		players[1] = player2;
+	}
 
 	public void render(float delta) {
 		handleInput();
