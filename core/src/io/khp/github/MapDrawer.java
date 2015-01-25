@@ -13,7 +13,7 @@ public class MapDrawer {
 	private int RED = -16776961;
 	
 	
-	
+	// Iterate through the pixels of the given image of the map
 	public MapDrawer(FileHandle file){
 		map = new Pixmap (file);
 		TileType tempTileType = null;
