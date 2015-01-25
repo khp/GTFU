@@ -60,15 +60,7 @@ public class GameScreen implements Screen{
 			camera = new OrthographicCamera(); // init camera
 			camera.setToOrtho(false, BOARDX, BOARDY);
 			shapeRenderer = new ShapeRenderer();
-			
-			// set up the players and their intersections
-			player1 = new Player1();
-			player2 = new Player2();
-			players = new Player[2];
-			players[0] = player1;
-			players[1] = player2;
-			
-			intersectionPlayers = new Rectangle();
+
 			
 			// set up the jumprenews
 			renewButtons = new JumpRenew[6];
@@ -82,6 +74,15 @@ public class GameScreen implements Screen{
 			testMap = Gdx.files.internal("level0.bmp");
 			mapDrawer = new MapDrawer(testMap);
 			map = new Map(mapDrawer.getTranslatedTileMap());
+			
+			// set up the players and their intersections
+			player1 = new Player1(map.findStartA());
+			player2 = new Player2(map.findStartB());
+			players = new Player[2];
+			players[0] = player1;
+			players[1] = player2;
+			
+			intersectionPlayers = new Rectangle();
 			
 			System.out.println();
 		}
@@ -231,12 +232,12 @@ public class GameScreen implements Screen{
 			
 			// If player 1 is above player 2, displace player 1 up and refresh jump
 			if (player1Y > player2Y) {
-				player1.setYVelocity(player2.getYVelocity());
+				player1.setYVelocity(player1.getYVelocity() + player2.getYVelocity());
 				player1.setAirborne(false);
 			}
 			// If player 2 is above player 2, displace player 2 up and refresh jump
 			else if (player1Y < player2Y) {
-				player2.setYVelocity(player1.getYVelocity());
+				player2.setYVelocity(player1.getYVelocity() + player2.getYVelocity());
 				player2.setAirborne(false);
 			}
 			// If player 1 is on player 2's right, displace them both in the appropriate direction
