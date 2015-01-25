@@ -149,9 +149,11 @@ public abstract class Player implements Collidable {
 							this.setXVelocity(0);
 							if (intersection.getX() == this.getX()){
 								this.setX(intersection.getX() + intersection.getWidth());
+								player.setX(player.getX() + this.getWidth());
 								return;
 							} else {
 								this.setX(intersection.getX() - this.getWidth());
+								player.setX(player.getX() - this.getWidth());
 								return;
 							}
 						}
@@ -224,14 +226,16 @@ public abstract class Player implements Collidable {
 						}
 						if (Intersector.intersectRectangles(this.rect, 
 								t.getRectangle(), intersection)
-								&& intersection.getWidth() > 1) {
+								&& intersection.getWidth() > 2) {
 							player.setYVelocity(0);
 							this.setYVelocity(0);
 							if (intersection.getY() == this.getY()){
 								this.setY(intersection.getY() + intersection.getHeight());
+								player.setY(player.getY() + this.getHeight());
 								return;
 							} else {
 								this.setY(intersection.getY() - this.getHeight());
+								player.setY(player.getY() - this.getHeight());
 								return;
 							}
 						}
