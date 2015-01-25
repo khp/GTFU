@@ -57,17 +57,24 @@ public class Tile implements Collidable {
 	}
 	
 	private void checkX(Player player){
-		float displacement = Gdx.graphics.getDeltaTime();
+		float dt = Gdx.graphics.getDeltaTime();
 		Rectangle playerRect = player.getRect();
 		Rectangle intersection = new Rectangle();
-		float currentXVel = player.getXVelocity() * displacement;
+		float displacement = player.getXVelocity() * dt;
 		float currentX = player.getX();
-		player.setX(currentX + currentXVel);
+		player.setX(currentX + displacement);
 		
 		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
 			player.setXVelocity(0);
+			if (intersection.getX() == player.getX()){
+				player.setX(intersection.getX() + intersection.getWidth());
+			} else {
+				player.setX(intersection.getX() - player.getWidth());
+			}
 		}
-		player.setX(player.getX() - currentXVel);
+		else { 
+			player.setX(player.getX() - displacement);
+		}
 	}
 	
 	private void checkY(Player player){
@@ -80,9 +87,16 @@ public class Tile implements Collidable {
 		
 		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
 			player.setYVelocity(0);
+			if (intersection.getY() == player.getY()) {
+				player.setY(intersection.getY() + intersection.getHeight());
+			} else {
+				player.setY(intersection.getY() - player.getHeight());
+			}
 			player.setAirborne(false);
 		}
-		player.setY(player.getY() - currentYVel);
+		else {
+			player.setY(player.getY() - currentYVel);
+		}
 	}
 
 }

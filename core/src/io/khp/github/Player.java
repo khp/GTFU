@@ -109,40 +109,62 @@ public abstract class Player implements Collidable {
 	
 	
 	private void checkXP(Player player, Tile[][] tileArray){
-		float displacement = Gdx.graphics.getDeltaTime();
+		float dt = Gdx.graphics.getDeltaTime();
 		Rectangle playerRect = player.getRect();
 		Rectangle intersection = new Rectangle();
-		float xVel1 = this.getXVelocity() * displacement;
-		float xVel2 = player.getXVelocity() * displacement;
+		float dx1 = this.getXVelocity() * dt;
+		float dx2 = player.getXVelocity() * dt;
 		float x1 = this.getX();
 		float x2 = player.getX();
-		this.setX(x1 + xVel1);
-		player.setX(x2 + xVel2);
+		this.setX(x1 + dx1);
+		player.setX(x2 + dx2);
 		
-		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
-			player.setXVelocity(player.getXVelocity() + this.getXVelocity());
+		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)
+				&& intersection.getHeight() > 2) {
+			player.setXVelocity((player.getXVelocity() + this.getXVelocity())/2);
 			this.setXVelocity(player.getXVelocity());
-		
-			boolean wallCheck = false;
-				for (Tile [] r : tileArray) {
-					for (Tile t : r) {
-						if (t.getType() == TileType.WALL){
-							if ((Intersector.intersectRectangles(playerRect, 
-									t.getRectangle(), intersection) ||
-									Intersector.intersectRectangles(this.rect, 
-									t.getRectangle(), intersection))
-									&& intersection.getHeight() > 0) {
-								player.setXVelocity(0);
-								this.setXVelocity(0);
+
+			for (Tile [] r : tileArray) {
+				for (Tile t : r) {
+					if (t.getType() == TileType.WALL){
+						if (Intersector.intersectRectangles(playerRect, 
+								t.getRectangle(), intersection) 
+								&& intersection.getHeight() > 2) {
+							player.setXVelocity(0);
+							this.setXVelocity(0);
+							if (intersection.getX() == player.getX()){
+								player.setX(intersection.getX() + intersection.getWidth());
+								this.setX(player.getX() + player.getWidth());
+								return;
+							} else {
+								player.setX(intersection.getX() - player.getWidth());
+								this.setX(player.getX() - player.getWidth());
+								return;
 							}
 						}
+						if (Intersector.intersectRectangles(this.rect, 
+								t.getRectangle(), intersection)
+								&& intersection.getHeight() > 1) {
+							player.setXVelocity(0);
+							this.setXVelocity(0);
+							if (intersection.getX() == this.getX()){
+								this.setX(intersection.getX() + intersection.getWidth());
+								return;
+							} else {
+								this.setX(intersection.getX() - this.getWidth());
+								return;
+							}
+						}
+						
 					}
 				}
+			}
 		
 			
-		}
-		this.setX(this.getX() - xVel1);
-		player.setX(player.getX() - xVel2);
+		} 
+		this.setX(this.getX() - dx1);
+		player.setX(player.getX() - dx2);
+		
 	}
 	
 	private void checkY(Player player){
@@ -176,21 +198,42 @@ public abstract class Player implements Collidable {
 		this.setY(y1 + yVel1);
 		player.setY(y2 + yVel2);
 		
-		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
-			player.setYVelocity(player.getYVelocity() + this.getYVelocity());
+		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)
+				&& intersection.getWidth() > 2) {
+			player.setYVelocity((player.getYVelocity() + this.getYVelocity())/2);
 			this.setYVelocity(player.getYVelocity());
 			this.setAirborne(false);
 			player.setAirborne(false);
 			for (Tile [] r : tileArray) {
 				for (Tile t : r) {
 					if (t.getType() == TileType.WALL){
-						if ((Intersector.intersectRectangles(playerRect, 
-								t.getRectangle(), intersection) ||
-								Intersector.intersectRectangles(this.rect, 
-								t.getRectangle(), intersection))
-								&& intersection.getWidth() > 0) {
+						if (Intersector.intersectRectangles(playerRect, 
+								t.getRectangle(), intersection) 
+								&& intersection.getWidth() > 2) {
 							player.setYVelocity(0);
 							this.setYVelocity(0);
+							if (intersection.getY() == player.getY()){
+								player.setY(intersection.getY() + intersection.getHeight());
+								this.setY(player.getY() + player.getHeight());
+								return;
+							} else {
+								player.setY(intersection.getY() - player.getHeight());
+								this.setY(player.getY() - player.getHeight());
+								return;
+							}
+						}
+						if (Intersector.intersectRectangles(this.rect, 
+								t.getRectangle(), intersection)
+								&& intersection.getWidth() > 1) {
+							player.setYVelocity(0);
+							this.setYVelocity(0);
+							if (intersection.getY() == this.getY()){
+								this.setY(intersection.getY() + intersection.getHeight());
+								return;
+							} else {
+								this.setY(intersection.getY() - this.getHeight());
+								return;
+							}
 						}
 					}
 				}

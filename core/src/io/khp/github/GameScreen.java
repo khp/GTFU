@@ -179,7 +179,6 @@ public class GameScreen implements Screen{
 			
 			if(first){
 				player1.checkCollisionsP(player2, map.getTileArray());
-				player2.checkCollisionsP(player1, map.getTileArray());
 				first = false;
 			}
 
