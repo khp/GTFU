@@ -23,7 +23,7 @@ public class GameScreen implements Screen{
 
 	MainGame g;
 
-	private static final float GRAVITY = 400;
+	private static final float GRAVITY = 450;
 	private static final int BOARDX = 800;
 	private static final int BOARDY = 480;
 	private static final float terminalVel = -300;
@@ -201,7 +201,7 @@ public class GameScreen implements Screen{
 				player.setY(0);
 				player.setAirborne(false);
 			} else if (player.getYVelocity() > -100) {
-				player.setYVelocity(player.getYVelocity() - 7 * GRAVITY * Gdx.graphics.getDeltaTime());
+				player.setYVelocity(player.getYVelocity() - 10 * GRAVITY * Gdx.graphics.getDeltaTime());
 			} 
 			else if (player.getYVelocity() > 100) {
 				player.setYVelocity(100);

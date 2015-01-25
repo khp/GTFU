@@ -204,8 +204,17 @@ public abstract class Player implements Collidable {
 				&& intersection.getWidth() > 1) {
 			player.setYVelocity((player.getYVelocity() + this.getYVelocity())/2);
 			this.setYVelocity(player.getYVelocity());
-			this.setAirborne(false);
-			player.setAirborne(false);
+			
+			
+			if (this.rect.getY() > playerRect.getY()) {
+				this.setAirborne(false);
+			} else {
+				player.setAirborne(false);
+			}
+			
+			
+			
+			
 			for (Tile [] r : tileArray) {
 				for (Tile t : r) {
 					if (t.getType() == TileType.WALL){
@@ -217,6 +226,8 @@ public abstract class Player implements Collidable {
 							if (intersection.getY() == player.getY()){
 								player.setY(intersection.getY() + intersection.getHeight());
 								this.setY(player.getY() + player.getHeight());
+								this.setAirborne(false);
+								player.setAirborne(false);
 								return;
 							} else {
 								player.setY(intersection.getY() - player.getHeight());

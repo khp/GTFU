@@ -91,10 +91,10 @@ public class Tile implements Collidable {
 			player.setYVelocity(0);
 			if (intersection.getY() == player.getY()) {
 				player.setY(intersection.getY() + intersection.getHeight());
+				player.setAirborne(false);
 			} else {
 				player.setY(intersection.getY() - player.getHeight());
 			}
-			player.setAirborne(false);
 		}
 		else {
 			player.setY(player.getY() - currentYVel);
