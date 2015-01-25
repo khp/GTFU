@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,7 +23,11 @@ import com.badlogic.gdx.graphics.GL20;
 public class MainMenu implements Screen {
 	Skin skin;
 	Stage stage;
+	Texture bg;
+	SpriteBatch batch;
 
+	private OrthographicCamera camera;
+	
 	MainGame g;
 
 	public MainMenu(MainGame g) {
@@ -37,9 +42,13 @@ public class MainMenu implements Screen {
 	public void create() {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
-
+		camera = new OrthographicCamera(); // init camera
+		camera.setToOrtho(false, 800, 480);
 		skin = new Skin();
-
+		
+		batch = new SpriteBatch();
+		bg = new Texture(Gdx.files.internal("mainmenu.png"));
+		
 		Pixmap pixmap = new Pixmap(100, 100, Format.RGBA8888);
 		pixmap.setColor(Color.GREEN);
 		pixmap.fill();
@@ -81,10 +90,14 @@ public class MainMenu implements Screen {
 	}
 
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		camera.update();
+		batch.begin();
+		batch.draw(bg, 0, 0);
+		batch.end();
+		
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
+
 	}
 
 	@Override
