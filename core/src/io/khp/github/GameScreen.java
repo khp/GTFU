@@ -40,6 +40,7 @@ public class GameScreen implements Screen{
 	private JumpRenew[] renewButtons;
 	
 	private Rectangle intersectionPlayers;
+	private int levelCounter = 0; 
 	
 	private Map map;
 	
@@ -71,15 +72,14 @@ public class GameScreen implements Screen{
 		renewButtons[4] = new JumpRenew (100, 500);
 		renewButtons[5] = new JumpRenew (100, 600);
 			
-		setUpLevel("level0.bmp");
+		setUpLevel();
 			
 		intersectionPlayers = new Rectangle();
 			
-		System.out.println();
 	}
 	
-	public void setUpLevel(String level) {
-		// Set up the map
+	public void setUpLevel() {
+		String level = "level"+levelCounter+".bmp";
 		testMap = Gdx.files.internal(level);
 		mapDrawer = new MapDrawer(testMap);
 		map = new Map(mapDrawer.getTranslatedTileMap());
@@ -111,10 +111,16 @@ public class GameScreen implements Screen{
 		//draw map from ArrayList of Rectangle
 		for (Tile[] ta : map.getTileArray()) {
 			for (Tile t : ta) {
-				shapeRenderer.setColor(0,0,1,1);
 				if (t.getType() == TileType.WALL) {
+					shapeRenderer.setColor(0,0,1,1);
 					shapeRenderer.rect(t.getRectangle().getX(), t.getRectangle().getY(), 
 						20, 20);
+				
+				}
+				if (t.getType() == TileType.END){
+					shapeRenderer.setColor(0,1,1,1);
+					shapeRenderer.rect(t.getRectangle().getX(), t.getRectangle().getY(), 
+							20, 20);
 				}
 			}
 		}
@@ -176,6 +182,8 @@ public class GameScreen implements Screen{
 	private void updatePlayers() {
 
 		boolean first = true;
+		Rectangle endCheck = new Rectangle();
+		
 		for(Player player : players){
 			// Update Players
 			if (first){
@@ -185,7 +193,16 @@ public class GameScreen implements Screen{
 			}
 			for(Tile[] r : map.getTileArray())
 				for(Tile t : r)
-					t.checkCollisions(player);
+					if (t.getType() == TileType.WALL){
+						t.checkCollisions(player);
+					}
+					else if (t.getType() == TileType.END){
+						if(Intersector.intersectRectangles(player.getRect(), t.getRectangle(), endCheck)){
+							levelCounter++;
+						setUpLevel();
+						}
+					}
+					
 			
 
 
@@ -221,6 +238,11 @@ public class GameScreen implements Screen{
 			}
 		}
 	}
+	
+	public void createNextLevel(){
+		
+	}
+	
 	
 	public static int getBoardHeight() {
 		return BOARDY;

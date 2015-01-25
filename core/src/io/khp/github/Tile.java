@@ -18,9 +18,9 @@ public class Tile {
 
 	public Tile(TileType type, int x, int y) {
 		this.type = type;
-		if (this.type == TileType.WALL) {
+		
 			this.rect = new Rectangle(x*20, (y-1)*20, 20, 20);
-		}
+		
 		this.x = x*20;
 		this.y = y*20;
 	}
@@ -54,7 +54,7 @@ public class Tile {
 			return;
 		checkX(player);
 		checkY(player);	
-	}
+		}
 	
 	private void checkX(Player player){
 		float dt = Gdx.graphics.getDeltaTime();
@@ -100,5 +100,7 @@ public class Tile {
 			player.setY(player.getY() - currentYVel);
 		}
 	}
+	
+	
 
 }
