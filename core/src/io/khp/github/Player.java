@@ -89,6 +89,9 @@ public abstract class Player implements Collidable {
 	}
 	
 	// Check left and right boarders of each player and tile with predictive collision
+	// "this" refers to the current player
+	// "player" refers to the other player
+	// "intersection" refers to the overlap between two players or a player and a wall.
 	private void checkXP(Player player, Tile[][] tileArray){
 		float dt = Gdx.graphics.getDeltaTime();     
 		Rectangle playerRect = player.getRect();     
@@ -151,6 +154,9 @@ public abstract class Player implements Collidable {
 	}
 	
 	// Check top and bottom boarders of each player and tile with predictive collision
+	// "this" refers to the current player
+	// "player" refers to the other player
+	// "intersection" refers to the overlap between two players or a player and a wall.
 	private void checkYP(Player player, Tile[][] tileArray){
 		float displacement = Gdx.graphics.getDeltaTime();
 		Rectangle playerRect = player.getRect();
