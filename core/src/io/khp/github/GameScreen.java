@@ -160,7 +160,7 @@ public class GameScreen implements Screen{
 		}
 		
 		if (!player1.getAirborne()) {
-			if (Gdx.input.isKeyPressed(Keys.UP)) {
+			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				player1.jump();
 			}
 		}
@@ -175,7 +175,7 @@ public class GameScreen implements Screen{
 			player2.setXVelocity(0);
 		}
 		if (!player2.getAirborne()) {
-			if (Gdx.input.isKeyPressed(Keys.W)) {
+			if (Gdx.input.isKeyJustPressed(Keys.W)) {
 				player2.jump();
 			}
 		}
