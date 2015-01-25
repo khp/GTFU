@@ -187,7 +187,7 @@ public class GameScreen implements Screen{
 		float currentY = player1.getY();
 		dummyR = player1.getRect();
 		dummyR.setY(currentY + currentYVel * Gdx.graphics.getDeltaTime());
-		player1.getRect().setY(map.moveY(dummyR));
+		player1.getRect().setY(map.moveY(dummyR, player1));
 
 		if (player1.getY() > BOARDY - player1.getHeight() / 2) {
 			player1.setYVelocity(0);
@@ -223,8 +223,9 @@ public class GameScreen implements Screen{
 
 		currentYVel = player2.getYVelocity();
 		currentY = player2.getY();
-
-		player2.setY(currentY + currentYVel * Gdx.graphics.getDeltaTime());
+		dummyR = player2.getRect();
+		dummyR.setY(currentY + currentYVel * Gdx.graphics.getDeltaTime());
+		player2.getRect().setY(map.moveY(dummyR, player2));
 
 		if (player2.getY() > BOARDY - player2.getHeight() / 2) {
 			player2.setYVelocity(0);
@@ -233,9 +234,11 @@ public class GameScreen implements Screen{
 			player2.setYVelocity(0);
 			player2.setY(0);
 			player2.setAirborne(false);
-		} else {
+		} else if (player2.getYVelocity() > -100) {
 			player2.setYVelocity(currentYVel - 10 * GRAVITY
 					* Gdx.graphics.getDeltaTime());
+		} else {
+			player2.setYVelocity(-100);
 		}
 	}
 

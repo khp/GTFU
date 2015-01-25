@@ -67,12 +67,12 @@ public class Map {
 		return playerRect.getX();
 	}
 	
-	public float moveY(Rectangle playerRect) {
+	public float moveY(Rectangle playerRect, Player player) {
 		Rectangle intersection = new Rectangle();
 		for (Rectangle r : rectList) {
 			if (Intersector.intersectRectangles(playerRect, r, intersection)) {
-				
 				if (intersection.getY() == playerRect.getY()) {
+					player.setAirborne(false);
 					return intersection.getY() + intersection.getHeight();
 				} else {
 					return intersection.getY() - playerRect.getHeight();

@@ -14,7 +14,7 @@ public class Player1 extends Player {
 		rect.width = height;
 		rect.height = width;
 		rect.x = GameScreen.getBoardHeight() / 2 - rect.width / 2;
-		rect.y = 100;
+		rect.y = 200;
 		this.setRect(rect);
 	}
 	
