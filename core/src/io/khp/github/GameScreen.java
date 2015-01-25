@@ -27,7 +27,7 @@ public class GameScreen implements Screen{
 	private static final int BOARDX = 800;
 	private static final int BOARDY = 480;
 	private static final float TERMINALVEL = -300;
-	private static final int NUMOFLEVELS = 0;
+	private static final int NUMOFLEVELS = 4;
 	
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
@@ -76,7 +76,9 @@ public class GameScreen implements Screen{
 			 level = "level1.bmp";
 			 levelCounter = 1;
 		} else { 
-			 level = "level"+levelCounter+".bmp";
+			// level = "______.bmp";
+			// comment out below level, rename above to test level
+			level = "level"+levelCounter+".bmp";
 		}
 		testMap = Gdx.files.internal(level);
 		mapDrawer = new MapDrawer(testMap);
@@ -130,10 +132,15 @@ public class GameScreen implements Screen{
 					shapeRenderer.rect(t.getRectangle().getX(), t.getRectangle().getY(), 
 							20, 20);
 				}
+				if (t.getType() == TileType.JUMPR) {
+					shapeRenderer.setColor(1, 1, 1, 1);
+					shapeRenderer.rect(t.getRectangle().getX(), t.getRectangle().getY(),
+							t.getRectangle().getWidth(), t.getRectangle().getHeight());
+				}
 			}
 		}
 		
-		// render the players and jumprenews
+		// render the players and jump renews
 		shapeRenderer.setColor(0, 1, 0, 1);
 		shapeRenderer.rect(player1.getX(), player1.getY(), player1.getWidth(),
 				player1.getHeight());
@@ -213,12 +220,12 @@ public class GameScreen implements Screen{
 						return;
 						}
 					}
-						else if (t.getType() == TileType.JUMPR){
-							if(Intersector.overlaps(player.getRect(), t.getRectangle())){
-								player.setAirborne(false);
-								t.setType(TileType.EMPTY);
-										
-							}
+					else if (t.getType() == TileType.JUMPR){
+						if(Intersector.overlaps(player.getRect(), t.getRectangle())){
+							player.setAirborne(false);
+							//t.setType(TileType.EMPTY);
+									
+						}
 					
 					}
 					

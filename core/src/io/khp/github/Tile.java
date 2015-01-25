@@ -18,9 +18,11 @@ public class Tile {
 
 	public Tile(TileType type, int x, int y) {
 		this.type = type;
-		
+		if (type == TileType.JUMPR) {
+			this.rect = new Rectangle(x*20 + 5, (y-1)*20 + 5, 10, 10);
+		} else {
 			this.rect = new Rectangle(x*20, (y-1)*20, 20, 20);
-		
+		}
 		this.x = x*20;
 		this.y = y*20;
 	}
