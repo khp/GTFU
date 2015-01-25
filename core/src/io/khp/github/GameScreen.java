@@ -170,16 +170,23 @@ public class GameScreen implements Screen{
 	private void updatePlayers() {
 		
 		// Update collisions
-		updateCollisions();
+		//updateCollisions();
 
+		boolean first = true;
 		for(Player player : players){
 			// Update Players
 			for(Tile[] r : map.getTileArray())
 				for(Tile t : r)
 					t.checkCollisions(player);
+			
+			if(first){
+				player1.checkCollisions(player2);
+				first = false;
+			}
 
-			player.setX(player.getX() + player.getXVelocity() * Gdx.graphics.getDeltaTime() );
+			player.setX(player.getX() + player.getXVelocity() * Gdx.graphics.getDeltaTime());
 			player.setY(player.getY() + player.getYVelocity() * Gdx.graphics.getDeltaTime());
+			
 
 			if (player.getX() > BOARDX - player.getWidth() / 2)
 				player.setX(BOARDX - player.getHeight() / 2);
@@ -201,48 +208,11 @@ public class GameScreen implements Screen{
 			}	
 			else {
 				player.setYVelocity(-150);
-
 			}	
-		
 		
 			// Renew the player's jump if they hit a JumpRenew
 			for (JumpRenew jumper : renewButtons) {
 				jumper.checkCollisions(player);
-			}
-		}
-	}
-
-	// Collision method
-	private void updateCollisions() {
-		
-		// check collisions between players
-		if (Intersector.intersectRectangles(player1.getRect(), 
-				player2.getRect(), this.intersectionPlayers)) {
-			
-	
-			
-			// Get the positions of the 2 players, as well as the magnitude of their overlap
-			float player1X = player1.getX();
-			float player1Y = player1.getY();
-			float player2X = player2.getX();
-			float player2Y = player2.getY();
-			float xDisplacement = intersectionPlayers.width / 2;
-			float yDisplacement = intersectionPlayers.height / 2;
-			
-			// If player 1 is above player 2, displace player 1 up and refresh jump
-			if (player1Y > player2Y) {
-				player1.setYVelocity(player2.getYVelocity());
-				player1.setAirborne(false);
-			}
-			// If player 2 is above player 2, displace player 2 up and refresh jump
-			else if (player1Y < player2Y) {
-				player2.setYVelocity(player1.getYVelocity());
-				player2.setAirborne(false);
-			}
-			// If player 1 is on player 2's right, displace them both in the appropriate direction
-			if (player1X > player2X) {
-				player1.setXVelocity(0);
-				player2.setXVelocity(0);
 			}
 		}
 		

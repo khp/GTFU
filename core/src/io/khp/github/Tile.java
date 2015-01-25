@@ -52,13 +52,8 @@ public class Tile implements Collidable {
 	public void checkCollisions(Player player) {
 		if (this.type != TileType.WALL)
 			return;
-		
-		
-		
 		checkX(player);
-		checkY(player);
-
-		
+		checkY(player);	
 	}
 	
 	private void checkX(Player player){
@@ -72,8 +67,7 @@ public class Tile implements Collidable {
 		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
 			player.setXVelocity(0);
 		}
-		currentX = player.getX();
-		player.setX(currentX - currentXVel);
+		player.setX(player.getX() - currentXVel);
 	}
 	
 	private void checkY(Player player){
@@ -88,8 +82,7 @@ public class Tile implements Collidable {
 			player.setYVelocity(0);
 			player.setAirborne(false);
 		}
-		currentY = player.getY();
-		player.setY(currentY - currentYVel);
+		player.setY(player.getY() - currentYVel);
 	}
 
 }
