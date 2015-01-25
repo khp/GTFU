@@ -27,6 +27,7 @@ public class GameScreen implements Screen{
 	private static final int BOARDX = 800;
 	private static final int BOARDY = 480;
 	private static final float TERMINALVEL = -300;
+	private static final int NUMOFLEVELS = 1;
 	
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
@@ -40,7 +41,7 @@ public class GameScreen implements Screen{
 	private JumpRenew[] renewButtons;
 	
 	private Rectangle intersectionPlayers;
-	private int levelCounter = 0; 
+	private int levelCounter = 0;
 	
 	private Map map;
 	
@@ -61,7 +62,7 @@ public class GameScreen implements Screen{
 		camera = new OrthographicCamera(); // init camera
 		camera.setToOrtho(false, BOARDX, BOARDY);
 		shapeRenderer = new ShapeRenderer();
-			
+
 		setUpLevel();
 			
 		intersectionPlayers = new Rectangle();
@@ -69,7 +70,14 @@ public class GameScreen implements Screen{
 	}
 	
 	public void setUpLevel() {
-		String level = "level"+levelCounter+".bmp";
+		
+		String level;
+		if (levelCounter > NUMOFLEVELS) {
+			 level = "level1.bmp";
+			 levelCounter = 1;
+		} else { 
+			 level = "level"+levelCounter+".bmp";
+		}
 		testMap = Gdx.files.internal(level);
 		mapDrawer = new MapDrawer(testMap);
 		map = new Map(mapDrawer.getTranslatedTileMap());

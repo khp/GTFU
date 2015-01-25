@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.*;
 public class JumpRenew {
 	
 	 private Circle circle;
-	 private final int radius = 5;
+	 private final int radius = 10;
 	 
 	 public JumpRenew(int x, int y){
 		 // small floating white dot on screen
