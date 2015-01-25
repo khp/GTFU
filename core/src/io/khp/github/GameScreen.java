@@ -90,13 +90,14 @@ public class GameScreen implements Screen{
 		players[1] = player2;
 		
 		// set up the JumpRenews
-		renewButtons = new JumpRenew[6];
+		
+		/*renewButtons = new JumpRenew[6];
 		renewButtons[0] = new JumpRenew (100, 100);
 		renewButtons[1] = new JumpRenew (100, 200);
 		renewButtons[2] = new JumpRenew (100, 300);
 		renewButtons[3] = new JumpRenew (100, 400);
 		renewButtons[4] = new JumpRenew (100, 500);
-		renewButtons[5] = new JumpRenew (100, 600);
+		renewButtons[5] = new JumpRenew (100, 600);*/
 	}
 
 	public void render(float delta) {
@@ -139,9 +140,9 @@ public class GameScreen implements Screen{
 		
 		shapeRenderer.setColor(1, 1, 1, 1);
 		;
-		for (JumpRenew jumper: renewButtons) {
+		/*for (JumpRenew jumper: renewButtons) {
 		shapeRenderer.circle(jumper.getX(), jumper.getY(), jumper.getRadius());
-		}
+		}*/
 
 		shapeRenderer.setColor(1, 0, 0, 0);
 		shapeRenderer.rect(player2.getX(), player2.getY(), player2.getWidth(),
@@ -251,11 +252,13 @@ public class GameScreen implements Screen{
 			}	
 		
 			// Renew the player's jump if they hit a JumpRenew
-			for (JumpRenew jumper : renewButtons) {
+			/*
+			 * for (JumpRenew jumper : renewButtons) {
 				jumper.checkCollisions(player);
+				*/
 			}
 		}
-	}
+	
 	
 	public void createNextLevel(){
 		
