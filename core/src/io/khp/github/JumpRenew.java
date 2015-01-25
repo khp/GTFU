@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.*;
 
 // 
 
-public class JumpRenew implements Collidable{
+public class JumpRenew {
 	
 	 private Circle circle;
 	 private final int radius = 5;

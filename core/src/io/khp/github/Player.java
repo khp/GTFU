@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
-public abstract class Player implements Collidable {
+public abstract class Player{
 	
 	private Rectangle rect;
 	private float yVelocity;
@@ -226,54 +226,4 @@ public abstract class Player implements Collidable {
 		this.setY(this.getY() - yVel1);
 		player.setY(player.getY() - yVel2);
 	}
-
-	
-	
-	// This is not used anymore but kept it to keep the abstract Players class happy.
-	public void checkCollisions(Player player) {
-		checkX(player);
-		checkY(player);	
-	}
-	
-	private void checkX(Player player){
-		float displacement = Gdx.graphics.getDeltaTime();
-		Rectangle playerRect = player.getRect();
-		Rectangle intersection = new Rectangle();
-		float xVel1 = this.getXVelocity() * displacement;
-		float xVel2 = player.getXVelocity() * displacement;
-		float x1 = this.getX();
-		float x2 = player.getX();
-		this.setX(x1 + xVel1);
-		player.setX(x2 + xVel2);
-		
-		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
-			player.setXVelocity(player.getXVelocity() + this.getXVelocity());
-			this.setXVelocity(player.getXVelocity());
-		}
-		this.setX(this.getX() - xVel1);
-		player.setX(player.getX() - xVel2);
-	}
-	
-	private void checkY(Player player){
-		float displacement = Gdx.graphics.getDeltaTime();
-		Rectangle playerRect = player.getRect();
-		Rectangle intersection = new Rectangle();
-		float yVel1 = this.getYVelocity() * displacement;
-		float yVel2 = player.getYVelocity() * displacement;
-		float y1 = this.getY();
-		float y2 = player.getY();
-		this.setY(y1 + yVel1);
-		player.setY(y2 + yVel2);
-		
-		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
-			player.setYVelocity(player.getYVelocity() + this.getYVelocity());
-			this.setYVelocity(player.getYVelocity());
-			this.setAirborne(false);
-			player.setAirborne(false);
-		}
-		this.setY(this.getY() - yVel1);
-		player.setY(player.getY() - yVel2);
-	}
-	// This is not used anymore but kept it to keep the abstract Players class happy.
-	
 }
