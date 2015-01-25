@@ -29,7 +29,7 @@ public class MapDrawer {
 				else if (colourCode == WHITE){
 					tempTileType = TileType.EMPTY;
 				}
-				else if (colourCode == Color.rgba8888(Color.GREEN)){
+				else if (colourCode == GREEN){
 					tempTileType = TileType.STARTA;
 				}
 				else if (colourCode == BLUE){
