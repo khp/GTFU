@@ -61,16 +61,6 @@ public class GameScreen implements Screen{
 		camera = new OrthographicCamera(); // init camera
 		camera.setToOrtho(false, BOARDX, BOARDY);
 		shapeRenderer = new ShapeRenderer();
-
-			
-		// set up the jumprenews
-		renewButtons = new JumpRenew[6];
-		renewButtons[0] = new JumpRenew (100, 100);
-		renewButtons[1] = new JumpRenew (100, 200);
-		renewButtons[2] = new JumpRenew (100, 300);
-		renewButtons[3] = new JumpRenew (100, 400);
-		renewButtons[4] = new JumpRenew (100, 500);
-		renewButtons[5] = new JumpRenew (100, 600);
 			
 		setUpLevel();
 			
@@ -90,6 +80,15 @@ public class GameScreen implements Screen{
 		players = new Player[2];
 		players[0] = player1;
 		players[1] = player2;
+		
+		// set up the JumpRenews
+		renewButtons = new JumpRenew[6];
+		renewButtons[0] = new JumpRenew (100, 100);
+		renewButtons[1] = new JumpRenew (100, 200);
+		renewButtons[2] = new JumpRenew (100, 300);
+		renewButtons[3] = new JumpRenew (100, 400);
+		renewButtons[4] = new JumpRenew (100, 500);
+		renewButtons[5] = new JumpRenew (100, 600);
 	}
 
 	public void render(float delta) {
