@@ -199,6 +199,7 @@ public class GameScreen implements Screen{
 						if(Intersector.intersectRectangles(player.getRect(), t.getRectangle(), endCheck)){
 							levelCounter++;
 						setUpLevel();
+						return;
 						}
 					}
 					
