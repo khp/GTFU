@@ -9,6 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 	    config.width = 800;
 	    config.height = 480;
+	    config.title = "GTFU Mt. Pleasant";
 		new LwjglApplication(new MainGame(), config);
 		
 	}
