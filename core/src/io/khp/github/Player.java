@@ -84,15 +84,15 @@ public abstract class Player{
 	
 	// Collision Code
 	public void checkCollisionsP(Player player, Tile[][] tileArray) {
-		checkXP(player, tileArray);
-		checkYP(player, tileArray);	
+		checkX(player, tileArray);
+		checkY(player, tileArray);	
 	}
 	
 	// Check left and right boarders of each player and tile with predictive collision
 	// "this" refers to the current player
 	// "player" refers to the other player
 	// "intersection" refers to the overlap between two players or a player and a wall.
-	private void checkXP(Player player, Tile[][] tileArray){
+	private void checkX(Player player, Tile[][] tileArray){
 		float dt = Gdx.graphics.getDeltaTime();     
 		Rectangle playerRect = player.getRect();     
 		Rectangle intersection = new Rectangle();
@@ -157,7 +157,7 @@ public abstract class Player{
 	// "this" refers to the current player
 	// "player" refers to the other player
 	// "intersection" refers to the overlap between two players or a player and a wall.
-	private void checkYP(Player player, Tile[][] tileArray){
+	private void checkY(Player player, Tile[][] tileArray){
 		float displacement = Gdx.graphics.getDeltaTime();
 		Rectangle playerRect = player.getRect();
 		Rectangle intersection = new Rectangle();
@@ -179,9 +179,6 @@ public abstract class Player{
 			} else {
 				player.setAirborne(false);
 			}
-			
-			
-			
 			
 			for (Tile [] r : tileArray) {
 				for (Tile t : r) {

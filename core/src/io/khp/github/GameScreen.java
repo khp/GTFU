@@ -26,7 +26,7 @@ public class GameScreen implements Screen{
 	private static final float GRAVITY = 450;
 	private static final int BOARDX = 800;
 	private static final int BOARDY = 480;
-	private static final float terminalVel = -300;
+	private static final float TERMINALVEL = -300;
 	
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
@@ -205,14 +205,14 @@ public class GameScreen implements Screen{
 				player.setYVelocity(0);
 				player.setY(0);
 				player.setAirborne(false);
-			} else if (player.getYVelocity() > -100) {
+			} else if (player.getYVelocity() > TERMINALVEL) {
 				player.setYVelocity(player.getYVelocity() - 10 * GRAVITY * Gdx.graphics.getDeltaTime());
 			} 
-			else if (player.getYVelocity() > 100) {
-				player.setYVelocity(100);
+			else if (player.getYVelocity() > -TERMINALVEL) {
+				player.setYVelocity(-TERMINALVEL);
 			}	
 			else {
-				player.setYVelocity(-100);
+				player.setYVelocity(TERMINALVEL);
 			}	
 		
 			// Renew the player's jump if they hit a JumpRenew
