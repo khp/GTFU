@@ -83,9 +83,10 @@ public abstract class Player{
 	
 	
 	// Collision Code
-	public void checkCollisionsP(Player player, Tile[][] tileArray) {
-		checkX(player, tileArray);
+	public void checkCollisions(Player player, Tile[][] tileArray) {
 		checkY(player, tileArray);	
+		checkX(player, tileArray);
+		
 	}
 	
 	// Check left and right boarders of each player and tile with predictive collision
@@ -113,7 +114,7 @@ public abstract class Player{
 					if (t.getType() == TileType.WALL){
 						if (Intersector.intersectRectangles(playerRect, 
 								t.getRectangle(), intersection) 
-								&& intersection.getHeight() > 2) {
+								&& intersection.getHeight() > 100) {
 							player.setXVelocity(0);
 							this.setXVelocity(0);
 							if (intersection.getX() == player.getX()){
@@ -128,7 +129,7 @@ public abstract class Player{
 						}
 						if (Intersector.intersectRectangles(this.rect, 
 								t.getRectangle(), intersection)
-								&& intersection.getHeight() > 1) {
+								&& intersection.getHeight() > 100) {
 							player.setXVelocity(0);
 							this.setXVelocity(0);
 							if (intersection.getX() == this.getX()){

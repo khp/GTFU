@@ -186,8 +186,8 @@ public class GameScreen implements Screen{
 		for(Player player : players){
 			// Update Players
 			if (first){
-				player1.checkCollisionsP(player2, map.getTileArray());
-
+				player1.checkCollisions(player2, map.getTileArray());
+				player2.checkCollisions(player1, map.getTileArray());
 				first = false;
 			}
 			for(Tile[] r : map.getTileArray())
