@@ -15,10 +15,11 @@ public abstract class Player implements Collidable {
 	private boolean airborne;
 	
 	public void jump() {
-		this.yVelocity = 700;
+		this.yVelocity = 900;
 		this.airborne = true;
 	}
 	
+	// Setters and Getters Below
 	public Rectangle getRect() {
 		return this.rect;
 	}
@@ -77,47 +78,27 @@ public abstract class Player implements Collidable {
 	public void setAirborne(boolean airborne) {
 		this.airborne = airborne;
 	}
+	// Setters and Getters above
 	
+	
+	
+	// Collision Code
 	public void checkCollisionsP(Player player, Tile[][] tileArray) {
 		checkXP(player, tileArray);
 		checkYP(player, tileArray);	
 	}
 	
-	public void checkCollisions(Player player) {
-		checkX(player);
-		checkY(player);	
-	}
-	
-	private void checkX(Player player){
-		float displacement = Gdx.graphics.getDeltaTime();
-		Rectangle playerRect = player.getRect();
-		Rectangle intersection = new Rectangle();
-		float xVel1 = this.getXVelocity() * displacement;
-		float xVel2 = player.getXVelocity() * displacement;
-		float x1 = this.getX();
-		float x2 = player.getX();
-		this.setX(x1 + xVel1);
-		player.setX(x2 + xVel2);
-		
-		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
-			player.setXVelocity(player.getXVelocity() + this.getXVelocity());
-			this.setXVelocity(player.getXVelocity());
-		}
-		this.setX(this.getX() - xVel1);
-		player.setX(player.getX() - xVel2);
-	}
-	
-	
+	// Check left and right boarders of each player and tile with predictive collision
 	private void checkXP(Player player, Tile[][] tileArray){
-		float dt = Gdx.graphics.getDeltaTime();
-		Rectangle playerRect = player.getRect();
+		float dt = Gdx.graphics.getDeltaTime();     
+		Rectangle playerRect = player.getRect();     
 		Rectangle intersection = new Rectangle();
 		float dx1 = this.getXVelocity() * dt;
 		float dx2 = player.getXVelocity() * dt;
 		float x1 = this.getX();
 		float x2 = player.getX();
-		this.setX(x1 + dx1);
-		player.setX(x2 + dx2);
+		this.setX(x1 + dx1);    
+		player.setX(x2 + dx2);  
 		
 		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)
 				&& intersection.getHeight() > 1) {
@@ -169,26 +150,7 @@ public abstract class Player implements Collidable {
 		
 	}
 	
-	private void checkY(Player player){
-		float displacement = Gdx.graphics.getDeltaTime();
-		Rectangle playerRect = player.getRect();
-		Rectangle intersection = new Rectangle();
-		float yVel1 = this.getYVelocity() * displacement;
-		float yVel2 = player.getYVelocity() * displacement;
-		float y1 = this.getY();
-		float y2 = player.getY();
-		this.setY(y1 + yVel1);
-		player.setY(y2 + yVel2);
-		
-		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
-			player.setYVelocity(player.getYVelocity() + this.getYVelocity());
-			this.setYVelocity(player.getYVelocity());
-			this.setAirborne(false);
-			player.setAirborne(false);
-		}
-		this.setY(this.getY() - yVel1);
-		player.setY(player.getY() - yVel2);
-	}
+	// Check top and bottom boarders of each player and tile with predictive collision
 	private void checkYP(Player player, Tile[][] tileArray){
 		float displacement = Gdx.graphics.getDeltaTime();
 		Rectangle playerRect = player.getRect();
@@ -259,4 +221,53 @@ public abstract class Player implements Collidable {
 		player.setY(player.getY() - yVel2);
 	}
 
+	
+	
+	// This is not used anymore but kept it to keep the abstract Players class happy.
+	public void checkCollisions(Player player) {
+		checkX(player);
+		checkY(player);	
+	}
+	
+	private void checkX(Player player){
+		float displacement = Gdx.graphics.getDeltaTime();
+		Rectangle playerRect = player.getRect();
+		Rectangle intersection = new Rectangle();
+		float xVel1 = this.getXVelocity() * displacement;
+		float xVel2 = player.getXVelocity() * displacement;
+		float x1 = this.getX();
+		float x2 = player.getX();
+		this.setX(x1 + xVel1);
+		player.setX(x2 + xVel2);
+		
+		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
+			player.setXVelocity(player.getXVelocity() + this.getXVelocity());
+			this.setXVelocity(player.getXVelocity());
+		}
+		this.setX(this.getX() - xVel1);
+		player.setX(player.getX() - xVel2);
+	}
+	
+	private void checkY(Player player){
+		float displacement = Gdx.graphics.getDeltaTime();
+		Rectangle playerRect = player.getRect();
+		Rectangle intersection = new Rectangle();
+		float yVel1 = this.getYVelocity() * displacement;
+		float yVel2 = player.getYVelocity() * displacement;
+		float y1 = this.getY();
+		float y2 = player.getY();
+		this.setY(y1 + yVel1);
+		player.setY(y2 + yVel2);
+		
+		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
+			player.setYVelocity(player.getYVelocity() + this.getYVelocity());
+			this.setYVelocity(player.getYVelocity());
+			this.setAirborne(false);
+			player.setAirborne(false);
+		}
+		this.setY(this.getY() - yVel1);
+		player.setY(player.getY() - yVel2);
+	}
+	// This is not used anymore but kept it to keep the abstract Players class happy.
+	
 }
