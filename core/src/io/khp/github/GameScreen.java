@@ -287,7 +287,7 @@ public class GameScreen implements Screen{
 				player1.setYVelocity(player2.getYVelocity());
 			}
 			// Vice versa if player 2 is above player 1
-			else if (player1.getY() <= player2.getY() && player2.getYVelocity() != terminalVel) {
+			else if (player1.getY() <= player2.getY() && player1.getYVelocity() != terminalVel) {
 				player2.setYVelocity(player1.getYVelocity());
 			}
 			
