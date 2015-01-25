@@ -7,7 +7,9 @@ public class MapDrawer {
 	private Tile[][] translatedTileMap;
 	private int WHITE = -1;
 	private int BLACK = 255;
-			
+	private int GREEN = 16711935;
+	private int BLUE = 65535;
+	private int RED = -16776961;
 	
 	
 	
@@ -25,6 +27,15 @@ public class MapDrawer {
 				}
 				else if (colourCode == WHITE){
 					tempTileType = TileType.EMPTY;
+				}
+				else if (colourCode == GREEN){
+					tempTileType = TileType.STARTA;
+				}
+				else if (colourCode == BLUE){
+					tempTileType = TileType.STARTB;
+				}
+				else if (colourCode == RED){
+					tempTileType = TileType.END;
 				}
 				translatedTileMap[x][y] = new Tile(tempTileType, 
 						x, 

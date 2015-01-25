@@ -39,7 +39,7 @@ public class GameScreen implements Screen{
 	private static final float GRAVITY = 400;
 	private static final int BOARDX = 800;
 	private static final int BOARDY = 480;
-	private static final float terminalVel = -300;
+	private static final float terminalVel = -300; // maximum fall speed
 	
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
@@ -101,7 +101,7 @@ public class GameScreen implements Screen{
 			
 			
 			
-			testMap = Gdx.files.internal("level0.bmp");
+			testMap = Gdx.files.internal("level99.bmp");
 			mapDrawer = new MapDrawer(testMap);
 			map = new Map(mapDrawer.getTranslatedTileMap());
 			
