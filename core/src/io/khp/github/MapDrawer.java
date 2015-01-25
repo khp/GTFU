@@ -11,6 +11,7 @@ public class MapDrawer {
 	private int GREEN = 16711935;
 	private int BLUE = 65535;
 	private int RED = -16776961;
+	private int PURPLE = -16711681;
 	
 	
 	// Iterate through the pixels of the given image of the map
@@ -34,6 +35,9 @@ public class MapDrawer {
 				}
 				else if (colourCode == BLUE){
 					tempTileType = TileType.STARTB;
+				}
+				else if (colourCode == PURPLE){
+					tempTileType = TileType.JUMPR;
 				}
 				else if (colourCode == RED){
 					tempTileType = TileType.END;

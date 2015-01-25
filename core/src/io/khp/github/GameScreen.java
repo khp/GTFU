@@ -27,7 +27,7 @@ public class GameScreen implements Screen{
 	private static final int BOARDX = 800;
 	private static final int BOARDY = 480;
 	private static final float TERMINALVEL = -300;
-	private static final int NUMOFLEVELS = 4;
+	private static final int NUMOFLEVELS = 0;
 	
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
@@ -73,8 +73,8 @@ public class GameScreen implements Screen{
 		
 		String level;
 		if (levelCounter > NUMOFLEVELS) {
-			 level = "level1.bmp";
-			 levelCounter = 1;
+			 level = "level0.bmp";
+			 levelCounter = 4;
 		} else { 
 			 level = "level"+levelCounter+".bmp";
 		}
