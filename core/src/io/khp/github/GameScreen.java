@@ -1,4 +1,3 @@
-
 package io.khp.github;
 
 import com.badlogic.gdx.Game;
