@@ -5,5 +5,6 @@ public enum TileType {
 	STARTA,
 	STARTB,
 	EMPTY,
-	WALL
+	WALL,
+	JUMPR
 }

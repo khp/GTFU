@@ -146,6 +146,9 @@ public class GameScreen implements Screen{
 	}
 	
 	private void handleInput() {
+		if (Gdx.input.isKeyPressed(Keys.R)) {
+			setUpLevel();
+		}
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 			player1.setXVelocity(-player1.getSpeed());
 		}
@@ -181,8 +184,7 @@ public class GameScreen implements Screen{
 	private void updatePlayers() {
 
 		boolean first = true;
-		Rectangle endCheck = new Rectangle();
-		
+				
 		for(Player player : players){
 			// Update Players
 			if (first){
@@ -196,11 +198,19 @@ public class GameScreen implements Screen{
 						t.checkCollisions(player);
 					}
 					else if (t.getType() == TileType.END){
-						if(Intersector.intersectRectangles(player.getRect(), t.getRectangle(), endCheck)){
+						if(Intersector.overlaps(player.getRect(), t.getRectangle())){
 							levelCounter++;
 						setUpLevel();
 						return;
 						}
+					}
+						else if (t.getType() == TileType.JUMPR){
+							if(Intersector.overlaps(player.getRect(), t.getRectangle())){
+								player.setAirborne(false);
+								t.setType(TileType.EMPTY);
+										
+							}
+					
 					}
 					
 			
