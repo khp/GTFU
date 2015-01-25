@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.files.FileHandle;
+
 
 public class MainGame extends Game {
 
