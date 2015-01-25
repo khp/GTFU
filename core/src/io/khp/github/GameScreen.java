@@ -41,7 +41,7 @@ public class GameScreen implements Screen{
 	private JumpRenew[] renewButtons;
 	
 	private Rectangle intersectionPlayers;
-	private int levelCounter = 4;
+	private int levelCounter = 0;
 	
 	private Map map;
 	
