@@ -41,7 +41,7 @@ public class GameScreen implements Screen{
 	private JumpRenew[] renewButtons;
 	
 	private Rectangle intersectionPlayers;
-	private int levelCounter = 0;
+	private int levelCounter = 4;
 	
 	private Map map;
 	
@@ -73,8 +73,8 @@ public class GameScreen implements Screen{
 		
 		String level;
 		if (levelCounter > NUMOFLEVELS) {
-			 level = "level0.bmp";
-			 levelCounter = 4;
+			 level = "level1.bmp";
+			 levelCounter = 1;
 		} else { 
 			 level = "level"+levelCounter+".bmp";
 		}
