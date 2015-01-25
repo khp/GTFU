@@ -79,10 +79,10 @@ public class Tile {
 	}
 	
 	private void checkY(Player player){
-		float displacement = Gdx.graphics.getDeltaTime();
+		float dt = Gdx.graphics.getDeltaTime();
 		Rectangle playerRect = player.getRect();
 		Rectangle intersection = new Rectangle();
-		float currentYVel = player.getYVelocity() * displacement;
+		float currentYVel = player.getYVelocity() * dt;
 		float currentY = player.getY();
 		player.setY(currentY + currentYVel);
 		
