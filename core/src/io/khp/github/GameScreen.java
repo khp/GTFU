@@ -49,6 +49,7 @@ public class GameScreen implements Screen{
 	private FileHandle testMap;
 	private MapDrawer mapDrawer;
 	private JumpRenew jumprenew;
+	private JumpRenew[] renewButtons;
 	
 	private Rectangle intersectionPlayer1;
 	private Rectangle intersectionPlayer2;
@@ -81,7 +82,16 @@ public class GameScreen implements Screen{
 			
 			player1 = new Player1();
 			
-			jumprenew = new JumpRenew();
+			
+			renewButtons = new JumpRenew[6];
+			
+			renewButtons[0] = new JumpRenew (100, 100);
+			renewButtons[1] = new JumpRenew (100, 200);
+			renewButtons[2] = new JumpRenew (100, 300);
+			renewButtons[3] = new JumpRenew (100, 400);
+			renewButtons[4] = new JumpRenew (100, 500);
+			renewButtons[5] = new JumpRenew (100, 600);
+			
 			
 			player2 = new Player2();
 			intersectionPlayer1 = new Rectangle();
@@ -121,7 +131,11 @@ public class GameScreen implements Screen{
 		shapeRenderer.rect(player1.getX(), player1.getY(), player1.getWidth(),
 				player1.getHeight());
 		
-		shapeRenderer.circle(jumprenew.getX(), jumprenew.getY(), jumprenew.getRadius());
+		shapeRenderer.setColor(1, 1, 1, 1);
+		;
+		for (JumpRenew jumper: renewButtons) {
+		shapeRenderer.circle(jumper.getX(), jumper.getY(), jumper.getRadius());
+		}
 
 		shapeRenderer.setColor(1, 0, 0, 0);
 		shapeRenderer.rect(player2.getX(), player2.getY(), player2.getWidth(),
@@ -204,9 +218,11 @@ public class GameScreen implements Screen{
 		}
 
 		// on collision the dot disappears and the players jump limit is increased by one.
-		if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
+		/*
+		 * if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
 			player1.setAirborne(false);
 		}
+		*/
 		
 		// Update Player 2
 		currentXVel = player2.getXVelocity();
@@ -239,6 +255,11 @@ public class GameScreen implements Screen{
 					* Gdx.graphics.getDeltaTime());
 		} else {
 			player2.setYVelocity(-100);
+		}
+		
+		for (JumpRenew jumper : renewButtons) {
+			jumper.checkCollisions(player1);
+			jumper.checkCollisions(player2);
 		}
 	}
 
