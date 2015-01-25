@@ -76,9 +76,9 @@ public class GameScreen implements Screen{
 			 level = "level1.bmp";
 			 levelCounter = 1;
 		} else { 
-			level = "Chase1.bmp";
+			//level = "Chase1.bmp";
 			// comment out below level, rename above to test level
-			//level = "level"+levelCounter+".bmp";
+			level = "level"+levelCounter+".bmp";
 		}
 		testMap = Gdx.files.internal(level);
 		mapDrawer = new MapDrawer(testMap);
