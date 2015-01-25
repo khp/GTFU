@@ -1,5 +1,5 @@
-package io.khp.github;
 
+package io.khp.github;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Intersector;
@@ -18,71 +18,13 @@ public class Map {
 	
 	
 	// initialize test map
-	public Map () {
-
-		tileWidth = 41;
-		tileHeight = 26;
-		
-		tileArray = new Tile[tileWidth + 1][tileHeight + 1];
-		rectList = new ArrayList<Rectangle>();
-		
-		for (int i = 0; i <= tileWidth; i++) {
-			for (int j = 0; j <= tileHeight; j++){
-				if(i == 0 || i == tileWidth || j == 0 || j == tileHeight
-						|| i == 2 || i == 30 || j == 3) {
-
-					tileArray[i][j] = new Tile(TileType.WALL, 
-							i, j-1);
-				} else {
-					tileArray[i][j] = new Tile(TileType.EMPTY, 
-							i, j-1);
-				}
-			}
-		}
-		for (int i = 0; i <= tileWidth; i++) {
-			for (int j = 0; j <= tileHeight; j++) {
-				if (tileArray[i][j].getType() == TileType.WALL) {
-					rectList.add(tileArray[i][j].getRectangle());
-				}
-			}
-		}
+	
+	
+	public Tile[][] getTileArray() {
+		return tileArray;
 	}
 	
 	public ArrayList<Rectangle> getRectList() {
 		return rectList;
 	}	
-	
-	public Tile[][] getTileList() {
-		return tileArray;
-	}	
-	
-	/*public float moveX(Rectangle playerRect) {
-		Rectangle intersection = new Rectangle();
-		for (Rectangle r : rectList) {
-			if (Intersector.intersectRectangles(playerRect, r, intersection)) {
-				
-				if (intersection.getX() == playerRect.getX()) {
-					return intersection.getX() + intersection.getWidth();
-				} else {
-					return intersection.getX() - playerRect.getWidth();
-				}
-			}
-		}
-		return playerRect.getX();
-	}
-	
-	public float moveY(Rectangle playerRect, Player player) {
-		Rectangle intersection = new Rectangle();
-		for (Rectangle r : rectList) {
-			if (Intersector.intersectRectangles(playerRect, r, intersection)) {
-				if (intersection.getY() == playerRect.getY()) {
-					player.setAirborne(false);
-					return intersection.getY() + intersection.getHeight();
-				} else {
-					return intersection.getY() - playerRect.getHeight();
-				}
-			}
-		}
-		return playerRect.getY();
-	}*/
 }

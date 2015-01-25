@@ -8,14 +8,14 @@ import com.badlogic.gdx.math.*;
 public class JumpRenew implements Collidable{
 	
 	 private Circle circle;
-	 private final int radius = 10;
+	 private final int radius = 5;
 	 
-	 public JumpRenew(){
+	 public JumpRenew(int x, int y){
 		 // small floating white dot on screen
 		 circle = new Circle();
 		 circle.radius = radius;
-		 circle.x = GameScreen.getBoardHeight() / 3;
-		 circle.y = 50;
+		 circle.x = x;
+		 circle.y = y;
 	 }	 
 	 
 	 public Circle getCircle(){

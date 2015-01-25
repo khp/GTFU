@@ -1,3 +1,4 @@
+
 package io.khp.github;
 
 import com.badlogic.gdx.Game;
@@ -30,38 +31,33 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class GameScreen implements Screen{
 	
-	
 	Skin skin;
 	Stage stage;
 
 	MainGame g;
 
-	public static final float GRAVITY = 200;
+	private static final float GRAVITY = 400;
 	private static final int BOARDX = 800;
 	private static final int BOARDY = 480;
+	private static final float terminalVel = -300;
 	
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
 	
 	private Player1 player1;
 	private Player2 player2;
-	
 	private Player[] players;
 	
 	private FileHandle testMap;
 	private MapDrawer mapDrawer;
 	private JumpRenew jumprenew;
+	private JumpRenew[] renewButtons;
 	
 	private Rectangle intersectionPlayer1;
 	private Rectangle intersectionPlayer2;
 	private Rectangle intersectionPlayers;
 	
 	private Map map;
-
-	
-	
-	
-	
 	
 	public GameScreen(MainGame g) {
 		create();
@@ -81,23 +77,30 @@ public class GameScreen implements Screen{
 			camera.setToOrtho(false, BOARDX, BOARDY);
 			shapeRenderer = new ShapeRenderer();
 			
-			
+			// set up the players and their intersections
 			player1 = new Player1();
 			player2 = new Player2();
 			players = new Player[2];
 			players[0] = player1;
 			players[1] = player2;
 			
-			jumprenew = new JumpRenew();
-			
 			intersectionPlayer1 = new Rectangle();
 			intersectionPlayer2 = new Rectangle();
 			intersectionPlayers = new Rectangle();
 			
-			map = new Map();
+			// set up the jumprenews
+			renewButtons = new JumpRenew[6];
+			renewButtons[0] = new JumpRenew (100, 100);
+			renewButtons[1] = new JumpRenew (100, 200);
+			renewButtons[2] = new JumpRenew (100, 300);
+			renewButtons[3] = new JumpRenew (100, 400);
+			renewButtons[4] = new JumpRenew (100, 500);
+			renewButtons[5] = new JumpRenew (100, 600);
 			
-			testMap = Gdx.files.internal("testmap.png.jpg");
+			testMap = Gdx.files.internal("level0.bmp");
 			mapDrawer = new MapDrawer(testMap);
+			map = new Map(mapDrawer.getTranslatedTileMap());
+			
 			System.out.println();
 		}
 
@@ -118,16 +121,26 @@ public class GameScreen implements Screen{
 		shapeRenderer.begin(ShapeType.Filled);
 
 		//draw map from ArrayList of Rectangle
-		for (Rectangle r : map.getRectList()) {
-			shapeRenderer.setColor(0,0,1,1);
-			shapeRenderer.rect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+		for (Tile[] ta : map.getTileArray()) {
+			for (Tile t : ta) {
+				shapeRenderer.setColor(0,0,1,1);
+				if (t.getType() == TileType.WALL) {
+					shapeRenderer.rect(t.getRectangle().getX(), t.getRectangle().getY(), 
+						20, 20);
+				}
+			}
 		}
 		
+		// render the players and jumprenews
 		shapeRenderer.setColor(0, 1, 0, 1);
 		shapeRenderer.rect(player1.getX(), player1.getY(), player1.getWidth(),
 				player1.getHeight());
 		
-		shapeRenderer.circle(jumprenew.getX(), jumprenew.getY(), jumprenew.getRadius());
+		shapeRenderer.setColor(1, 1, 1, 1);
+		;
+		for (JumpRenew jumper: renewButtons) {
+		shapeRenderer.circle(jumper.getX(), jumper.getY(), jumper.getRadius());
+		}
 
 		shapeRenderer.setColor(1, 0, 0, 0);
 		shapeRenderer.rect(player2.getX(), player2.getY(), player2.getWidth(),
@@ -151,7 +164,7 @@ public class GameScreen implements Screen{
 		}
 		
 		if (!player1.getAirborne()) {
-			if (Gdx.input.isKeyPressed(Keys.UP)) {
+			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				player1.jump();
 			}
 		}
@@ -166,7 +179,7 @@ public class GameScreen implements Screen{
 			player2.setXVelocity(0);
 		}
 		if (!player2.getAirborne()) {
-			if (Gdx.input.isKeyPressed(Keys.W)) {
+			if (Gdx.input.isKeyJustPressed(Keys.W)) {
 				player2.jump();
 			}
 		}
@@ -176,10 +189,10 @@ public class GameScreen implements Screen{
 		
 		// Update collisions
 		updateCollisions();
-		
+
 		for(Player player : players){
 			// Update Players
-			for(Tile[] r : map.getTileList())
+			for(Tile[] r : map.getTileArray())
 				for(Tile t : r)
 					t.checkCollisions(player);
 
@@ -203,10 +216,12 @@ public class GameScreen implements Screen{
 			} else {
 				player.setYVelocity(-100);
 
-			}
-
-			if (Intersector.overlaps(jumprenew.getCircle(), player.getRect())){
-				player.setAirborne(false);
+			}	
+		
+		
+			// Renew the player's jump if they hit a JumpRenew
+			for (JumpRenew jumper : renewButtons) {
+				jumper.checkCollisions(player);
 			}
 		}
 	}
@@ -214,15 +229,20 @@ public class GameScreen implements Screen{
 	// Collision method
 	private void updateCollisions() {
 		
+		// check collisions between players
 		if (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
-
-			if (player1.getY() > player2.getY() && player2.getYVelocity() != 0) {
+			
+			// If player 1 is above player 2 when they collide:
+			// Set player 1's y-velocity to player 2's
+			if (player1.getY() > player2.getY() && player2.getYVelocity() != terminalVel) {
 				player1.setYVelocity(player2.getYVelocity());
 			}
-			else if (player1.getY() <= player2.getY() && player1.getYVelocity() != 0) {
+			// Vice versa if player 2 is above player 1
+			else if (player1.getY() <= player2.getY() && player2.getYVelocity() != terminalVel) {
 				player2.setYVelocity(player1.getYVelocity());
 			}
 			
+			// Get the positions of the 2 players, as well as the magnitude of their overlap
 			float player1X = player1.getX();
 			float player1Y = player1.getY();
 			float player2X = player2.getX();
@@ -230,19 +250,18 @@ public class GameScreen implements Screen{
 			float xDisplacement = intersectionPlayers.width / 2;
 			float yDisplacement = intersectionPlayers.height / 2;
 			
+			// If player 1 is above player 2, displace player 1 up and refresh jump
 			if (player1Y > player2Y) {
-				player1.setY(player1Y + yDisplacement);
-				// player2.setY(player2Y - yDisplacement);
-				
+				player1.setY(player1Y + yDisplacement * 2);
 				player1.setAirborne(false);
 			}
-			else if (player1Y <= player2Y) {
-				// player1.setY(player1Y - yDisplacement);
-				player2.setY(player2Y + yDisplacement);
-				
+			// If player 2 is above player 2, displace player 2 up and refresh jump
+			else if (player1Y < player2Y) {
+				player2.setY(player2Y + yDisplacement * 2);
 				player2.setAirborne(false);
 			}
-			else if (player1X >= player2X) {
+			// If player 1 is on player 2's right, displace them both in the appropriate direction
+			else if (player1X > player2X) {
 				player1.setX(player1X + xDisplacement);
 				player2.setX(player2X - xDisplacement);
 			}

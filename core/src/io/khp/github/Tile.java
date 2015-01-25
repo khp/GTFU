@@ -19,7 +19,7 @@ public class Tile implements Collidable {
 	public Tile(TileType type, int x, int y) {
 		this.type = type;
 		if (this.type == TileType.WALL) {
-			this.rect = new Rectangle((x) * 20, y * 20, 20, 20);
+			this.rect = new Rectangle(x*20, (y-1)*20, 20, 20);
 		}
 		this.x = x;
 		this.y = y;
