@@ -16,17 +16,19 @@ public class MapDrawer {
 		TileType tempTileType = null;
 		int height = map.getHeight();
 		int width = map.getWidth(); 
-		translatedTileMap = new Tile[height][width];
+		translatedTileMap = new Tile[width][height];
 		for(int y = 0; y < height; y++){
 			for (int x = 0; x < width; x++){
-				int colourCode = map.getPixel(y, x);
+				int colourCode = map.getPixel(x, y);
 				if (colourCode == BLACK){
 					tempTileType = TileType.WALL;
 				}
 				else if (colourCode == WHITE){
 					tempTileType = TileType.EMPTY;
 				}
-				translatedTileMap[y][x] = new Tile(tempTileType, y, x);
+				translatedTileMap[x][y] = new Tile(tempTileType, 
+						x, 
+						height - y);
 				
 			}
 		}	
