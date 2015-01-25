@@ -76,7 +76,7 @@ public class GameScreen implements Screen{
 			 level = "level1.bmp";
 			 levelCounter = 1;
 		} else { 
-			// level = "______.bmp";
+			//level = "Alex1.bmp";
 			// comment out below level, rename above to test level
 			level = "level"+levelCounter+".bmp";
 		}
