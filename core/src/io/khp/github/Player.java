@@ -13,13 +13,10 @@ public abstract class Player implements Collidable {
 	public final int width = 24;
 	private final int speed = 200;
 	private boolean airborne;
-	private Player linked;
 	
 	public void jump() {
 		this.yVelocity = 700;
 		this.airborne = true;
-		if(isLinked())
-			linked.setYVelocity(800);
 	}
 	
 	public Rectangle getRect() {
@@ -81,14 +78,9 @@ public abstract class Player implements Collidable {
 		this.airborne = airborne;
 	}
 	
-	public Player getLinked() {
-		return this.linked;
-	}
-	public void setLinked(Player linked) {
-		this.linked = linked;
-	}
-	public boolean isLinked() {
-		return linked != null;
+	public void checkCollisionsP(Player player, Tile[][] tileArray) {
+		checkXP(player, tileArray);
+		checkYP(player, tileArray);	
 	}
 	
 	public void checkCollisions(Player player) {
@@ -108,14 +100,46 @@ public abstract class Player implements Collidable {
 		player.setX(x2 + xVel2);
 		
 		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
-			player.setXVelocity(0);
-			this.setXVelocity(0);
-			this.linked = player;
-			player.linked = this;
+			player.setXVelocity(player.getXVelocity() + this.getXVelocity());
+			this.setXVelocity(player.getXVelocity());
 		}
-		else{
-			this.linked = null;
-			player.linked = null;
+		this.setX(this.getX() - xVel1);
+		player.setX(player.getX() - xVel2);
+	}
+	
+	
+	private void checkXP(Player player, Tile[][] tileArray){
+		float displacement = Gdx.graphics.getDeltaTime();
+		Rectangle playerRect = player.getRect();
+		Rectangle intersection = new Rectangle();
+		float xVel1 = this.getXVelocity() * displacement;
+		float xVel2 = player.getXVelocity() * displacement;
+		float x1 = this.getX();
+		float x2 = player.getX();
+		this.setX(x1 + xVel1);
+		player.setX(x2 + xVel2);
+		
+		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
+			player.setXVelocity(player.getXVelocity() + this.getXVelocity());
+			this.setXVelocity(player.getXVelocity());
+		
+			boolean wallCheck = false;
+				for (Tile [] r : tileArray) {
+					for (Tile t : r) {
+						if (t.getType() == TileType.WALL){
+							if ((Intersector.intersectRectangles(playerRect, 
+									t.getRectangle(), intersection) ||
+									Intersector.intersectRectangles(this.rect, 
+									t.getRectangle(), intersection))
+									&& intersection.getHeight() > 0) {
+								player.setXVelocity(0);
+								this.setXVelocity(0);
+							}
+						}
+					}
+				}
+		
+			
 		}
 		this.setX(this.getX() - xVel1);
 		player.setX(player.getX() - xVel2);
@@ -133,16 +157,46 @@ public abstract class Player implements Collidable {
 		player.setY(y2 + yVel2);
 		
 		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
-			player.setYVelocity(0);
-			this.setYVelocity(0);
+			player.setYVelocity(player.getYVelocity() + this.getYVelocity());
+			this.setYVelocity(player.getYVelocity());
 			this.setAirborne(false);
 			player.setAirborne(false);
-			this.linked = player;
-			player.linked = this;
-		}else{
-			this.linked = null;
-			player.linked = null;
 		}
+		this.setY(this.getY() - yVel1);
+		player.setY(player.getY() - yVel2);
+	}
+	private void checkYP(Player player, Tile[][] tileArray){
+		float displacement = Gdx.graphics.getDeltaTime();
+		Rectangle playerRect = player.getRect();
+		Rectangle intersection = new Rectangle();
+		float yVel1 = this.getYVelocity() * displacement;
+		float yVel2 = player.getYVelocity() * displacement;
+		float y1 = this.getY();
+		float y2 = player.getY();
+		this.setY(y1 + yVel1);
+		player.setY(y2 + yVel2);
+		
+		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
+			player.setYVelocity(player.getYVelocity() + this.getYVelocity());
+			this.setYVelocity(player.getYVelocity());
+			this.setAirborne(false);
+			player.setAirborne(false);
+			for (Tile [] r : tileArray) {
+				for (Tile t : r) {
+					if (t.getType() == TileType.WALL){
+						if ((Intersector.intersectRectangles(playerRect, 
+								t.getRectangle(), intersection) ||
+								Intersector.intersectRectangles(this.rect, 
+								t.getRectangle(), intersection))
+								&& intersection.getWidth() > 0) {
+							player.setYVelocity(0);
+							this.setYVelocity(0);
+						}
+					}
+				}
+			}
+			
+		} 
 		this.setY(this.getY() - yVel1);
 		player.setY(player.getY() - yVel2);
 	}

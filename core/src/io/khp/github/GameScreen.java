@@ -169,9 +169,6 @@ public class GameScreen implements Screen{
 	}
 
 	private void updatePlayers() {
-		
-		// Update collisions
-		//updateCollisions();
 
 		boolean first = true;
 		for(Player player : players){
@@ -181,7 +178,8 @@ public class GameScreen implements Screen{
 					t.checkCollisions(player);
 			
 			if(first){
-				player1.checkCollisions(player2);
+				player1.checkCollisionsP(player2, map.getTileArray());
+				player2.checkCollisionsP(player1, map.getTileArray());
 				first = false;
 			}
 

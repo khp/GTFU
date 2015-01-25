@@ -27,6 +27,7 @@ public class Player1 extends Player {
 		rect.y = start.getY();
 		this.setRect(rect);
 	}
+
 	
 	
 }
