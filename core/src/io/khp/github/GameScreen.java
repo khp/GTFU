@@ -101,7 +101,7 @@ public class GameScreen implements Screen{
 			
 			
 			
-			testMap = Gdx.files.internal("level0.jpg");
+			testMap = Gdx.files.internal("level0.bmp");
 			mapDrawer = new MapDrawer(testMap);
 			map = new Map(mapDrawer.getTranslatedTileMap());
 			

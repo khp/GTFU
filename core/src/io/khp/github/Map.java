@@ -17,8 +17,8 @@ public class Map {
 		tileHeight = 24;
 		tileWidth = 40;
 		this.tileArray = tileArray;
-		for (int i = 0; i < tileHeight; i++) {
-			for (int j = 0; j < tileWidth; j++) {
+		for (int i = 0; i < tileWidth; i++) {
+			for (int j = 0; j < tileHeight; j++) {
 				if (tileArray[i][j].getType() == TileType.WALL) {
 					rectList.add(tileArray[i][j].getRectangle());
 				}
