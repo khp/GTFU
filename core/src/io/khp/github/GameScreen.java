@@ -179,6 +179,7 @@ public class GameScreen implements Screen{
 			
 			if(first){
 				player1.checkCollisionsP(player2, map.getTileArray());
+				player2.checkCollisionsP(player1, map.getTileArray());
 				first = false;
 			}
 
@@ -199,7 +200,7 @@ public class GameScreen implements Screen{
 				player.setY(0);
 				player.setAirborne(false);
 			} else if (player.getYVelocity() > -100) {
-				player.setYVelocity(player.getYVelocity() - 10 * GRAVITY * Gdx.graphics.getDeltaTime());
+				player.setYVelocity(player.getYVelocity() - 7 * GRAVITY * Gdx.graphics.getDeltaTime());
 			} 
 			else if (player.getYVelocity() > 100) {
 				player.setYVelocity(100);

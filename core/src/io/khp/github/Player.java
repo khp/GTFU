@@ -120,7 +120,7 @@ public abstract class Player implements Collidable {
 		player.setX(x2 + dx2);
 		
 		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)
-				&& intersection.getHeight() > 2) {
+				&& intersection.getHeight() > 1) {
 			player.setXVelocity((player.getXVelocity() + this.getXVelocity())/2);
 			this.setXVelocity(player.getXVelocity());
 
@@ -138,7 +138,7 @@ public abstract class Player implements Collidable {
 								return;
 							} else {
 								player.setX(intersection.getX() - player.getWidth());
-								this.setX(player.getX() - player.getWidth());
+								this.setX(player.getX() - this.getWidth());
 								return;
 							}
 						}
@@ -153,7 +153,7 @@ public abstract class Player implements Collidable {
 								return;
 							} else {
 								this.setX(intersection.getX() - this.getWidth());
-								player.setX(player.getX() - this.getWidth());
+								player.setX(player.getX() - player.getWidth());
 								return;
 							}
 						}
@@ -201,7 +201,7 @@ public abstract class Player implements Collidable {
 		player.setY(y2 + yVel2);
 		
 		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)
-				&& intersection.getWidth() > 2) {
+				&& intersection.getWidth() > 1) {
 			player.setYVelocity((player.getYVelocity() + this.getYVelocity())/2);
 			this.setYVelocity(player.getYVelocity());
 			this.setAirborne(false);
@@ -220,7 +220,7 @@ public abstract class Player implements Collidable {
 								return;
 							} else {
 								player.setY(intersection.getY() - player.getHeight());
-								this.setY(player.getY() - player.getHeight());
+								this.setY(player.getY() - this.getHeight());
 								return;
 							}
 						}
@@ -231,11 +231,11 @@ public abstract class Player implements Collidable {
 							this.setYVelocity(0);
 							if (intersection.getY() == this.getY()){
 								this.setY(intersection.getY() + intersection.getHeight());
-								player.setY(player.getY() + this.getHeight());
+								player.setY(this.getY() + this.getHeight());
 								return;
 							} else {
 								this.setY(intersection.getY() - this.getHeight());
-								player.setY(player.getY() - this.getHeight());
+								player.setY(this.getY() - player.getHeight());
 								return;
 							}
 						}
