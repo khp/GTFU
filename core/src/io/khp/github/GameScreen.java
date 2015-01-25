@@ -99,10 +99,12 @@ public class GameScreen implements Screen{
 			intersectionPlayer2 = new Rectangle();
 			intersectionPlayers = new Rectangle();
 			
-			map = new Map();
 			
-			testMap = Gdx.files.internal("testmap.png.jpg");
+			
+			testMap = Gdx.files.internal("level0.jpg");
 			mapDrawer = new MapDrawer(testMap);
+			map = new Map(mapDrawer.getTranslatedTileMap());
+			
 			System.out.println();
 		}
 
@@ -123,11 +125,15 @@ public class GameScreen implements Screen{
 		shapeRenderer.begin(ShapeType.Filled);
 
 		//draw map from ArrayList of Rectangle
-		for (Rectangle r : map.getRectList()) {
-			shapeRenderer.setColor(0,0,1,1);
-			shapeRenderer.rect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+		for (Tile[] ta : map.getTileArray()) {
+			for (Tile t : ta) {
+				shapeRenderer.setColor(0,0,1,1);
+				if (t.getType() == TileType.WALL) {
+					shapeRenderer.rect(t.getRectangle().getX(), t.getRectangle().getY(), 
+						20, 20);
+				}
+			}
 		}
-		
 		shapeRenderer.setColor(0, 1, 0, 1);
 		shapeRenderer.rect(player1.getX(), player1.getY(), player1.getWidth(),
 				player1.getHeight());

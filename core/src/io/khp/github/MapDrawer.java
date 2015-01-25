@@ -20,20 +20,20 @@ public class MapDrawer {
 		for(int y = 0; y < height; y++){
 			for (int x = 0; x < width; x++){
 				int colourCode = map.getPixel(y, x);
-				if (colourCode == WHITE){
+				if (colourCode == BLACK){
 					tempTileType = TileType.WALL;
 				}
-				else if (colourCode == BLACK){
+				else if (colourCode == WHITE){
 					tempTileType = TileType.EMPTY;
 				}
-				translatedTileMap[y][x] = new Tile(tempTileType, y*Tile.WIDTH, x*Tile.HEIGHT);
+				translatedTileMap[y][x] = new Tile(tempTileType, y, x);
 				
 			}
-		}
-		
-	
+		}	
 	}
 
-	
+	public Tile[][] getTranslatedTileMap () {
+		return translatedTileMap;
+	}
 }
 
