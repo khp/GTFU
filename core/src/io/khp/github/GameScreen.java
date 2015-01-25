@@ -71,7 +71,7 @@ public class GameScreen implements Screen{
 		renewButtons[4] = new JumpRenew (100, 500);
 		renewButtons[5] = new JumpRenew (100, 600);
 			
-		setUpLevel("level0.bmp");
+		setUpLevel("level0.jpg");
 			
 		intersectionPlayers = new Rectangle();
 			
