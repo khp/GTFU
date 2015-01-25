@@ -1,61 +1,95 @@
 package io.khp.github;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
-
 public class Tile implements Collidable {
-	
+
 	private int x;
 	private int y;
 	private TileType type;
-	private boolean collision; 
+	private boolean collision;
 	// The enum is a type. We are assigning "type" to the enum TileType
 	private Rectangle rect;
-	
 
 	final static int WIDTH = 20;
 	final static int HEIGHT = 20;
-	
-    
-	
 
-	
-	public Tile(TileType type, int x, int y){
+	public Tile(TileType type, int x, int y) {
 		this.type = type;
 		if (this.type == TileType.WALL) {
-			this.rect = new Rectangle((x-1)*20, y*20, 20, 20);
+			this.rect = new Rectangle((x) * 20, y * 20, 20, 20);
 		}
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public Rectangle getRectangle() {
 		return this.rect;
 	}
-	
-	public TileType getType(){
+
+	public TileType getType() {
 		return this.type;
 	}
-	
-	public int getX(){
+
+	public int getX() {
 		return this.x;
 	}
-	
-	public int getY(){
+
+	public int getY() {
 		return this.y;
 	}
-			
+
 	public boolean checkCollision() {
 		return collision;
 	}
-	
+
 	public void setType(TileType type) {
 		this.type = type;
 	}
+
+	public void checkCollisions(Player player) {
+		if (this.type != TileType.WALL)
+			return;
+		
+		
+		
+		checkX(player);
+		checkY(player);
+
+		
+	}
 	
-	public void checkCollisions(Player player){}
-    
+	private void checkX(Player player){
+		float displacement = Gdx.graphics.getDeltaTime();
+		Rectangle playerRect = player.getRect();
+		Rectangle intersection = new Rectangle();
+		float currentXVel = player.getXVelocity() * displacement;
+		float currentX = player.getX();
+		player.setX(currentX + currentXVel);
+		
+		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
+			player.setXVelocity(0);
+		}
+		currentX = player.getX();
+		player.setX(currentX - currentXVel);
+	}
 	
-	
-	
+	private void checkY(Player player){
+		float displacement = Gdx.graphics.getDeltaTime();
+		Rectangle playerRect = player.getRect();
+		Rectangle intersection = new Rectangle();
+		float currentYVel = player.getYVelocity() * displacement;
+		float currentY = player.getY();
+		player.setY(currentY + currentYVel);
+		
+		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
+			player.setYVelocity(0);
+			player.setAirborne(false);
+		}
+		currentY = player.getY();
+		player.setY(currentY - currentYVel);
+	}
+
 }

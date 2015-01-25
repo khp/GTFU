@@ -52,7 +52,11 @@ public class Map {
 		return rectList;
 	}	
 	
-	public float moveX(Rectangle playerRect) {
+	public Tile[][] getTileList() {
+		return tileArray;
+	}	
+	
+	/*public float moveX(Rectangle playerRect) {
 		Rectangle intersection = new Rectangle();
 		for (Rectangle r : rectList) {
 			if (Intersector.intersectRectangles(playerRect, r, intersection)) {
@@ -80,5 +84,5 @@ public class Map {
 			}
 		}
 		return playerRect.getY();
-	}
+	}*/
 }

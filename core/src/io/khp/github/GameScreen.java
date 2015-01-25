@@ -46,6 +46,8 @@ public class GameScreen implements Screen{
 	private Player1 player1;
 	private Player2 player2;
 	
+	private Player[] players;
+	
 	private FileHandle testMap;
 	private MapDrawer mapDrawer;
 	private JumpRenew jumprenew;
@@ -79,11 +81,15 @@ public class GameScreen implements Screen{
 			camera.setToOrtho(false, BOARDX, BOARDY);
 			shapeRenderer = new ShapeRenderer();
 			
+			
 			player1 = new Player1();
+			player2 = new Player2();
+			players = new Player[2];
+			players[0] = player1;
+			players[1] = player2;
 			
 			jumprenew = new JumpRenew();
 			
-			player2 = new Player2();
 			intersectionPlayer1 = new Rectangle();
 			intersectionPlayer2 = new Rectangle();
 			intersectionPlayers = new Rectangle();
@@ -169,89 +175,47 @@ public class GameScreen implements Screen{
 	private void updatePlayers() {
 		
 		// Update collisions
-		updateCollsions();
+		updateCollisions();
 		
-		// Update Player 1
-		float currentXVel = player1.getXVelocity();
-		float currentX = player1.getX();
-		Rectangle dummyR = player1.getRect();
-		dummyR.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
-		player1.getRect().setX(map.moveX(dummyR));
-		
-		if (player1.getX() > BOARDX - player1.getWidth() / 2)
-			player1.setX(BOARDX - player1.getHeight() / 2);
-		else if (player1.getX() < 0)
-			player1.setX(0);
+		for(Player player : players){
+			// Update Players
+			for(Tile[] r : map.getTileList())
+				for(Tile t : r)
+					t.checkCollisions(player);
 
-		float currentYVel = player1.getYVelocity();
-		float currentY = player1.getY();
-		dummyR = player1.getRect();
-		dummyR.setY(currentY + currentYVel * Gdx.graphics.getDeltaTime());
-		player1.getRect().setY(map.moveY(dummyR, player1));
+			player.setX(player.getX() + player.getXVelocity() * Gdx.graphics.getDeltaTime() );
+			player.setY(player.getY() + player.getYVelocity() * Gdx.graphics.getDeltaTime());
 
-		if (player1.getY() > BOARDY - player1.getHeight() / 2) {
-			player1.setYVelocity(0);
-			player1.setY(BOARDY - player1.getHeight() / 2);
-		} else if (player1.getY() < 0) {
-			player1.setYVelocity(0);
-			player1.setY(0);
-			player1.setAirborne(false);
-		} else if (player1.getYVelocity() > -100) {
-			player1.setYVelocity(currentYVel - 10 * GRAVITY
-					* Gdx.graphics.getDeltaTime());
-		} else {
-			player1.setYVelocity(-100);
-		}
+			if (player.getX() > BOARDX - player.getWidth() / 2)
+				player.setX(BOARDX - player.getHeight() / 2);
+			else if (player.getX() < 0)
+				player.setX(0);
 
-		// on collision the dot disappears and the players jump limit is increased by one.
-		if (Intersector.overlaps(jumprenew.getCircle(), player1.getRect())){
-			player1.setAirborne(false);
-		}
-		
-		// Update Player 2
-		currentXVel = player2.getXVelocity();
-		currentX = player2.getX();
-		
-		dummyR = player2.getRect();
-		dummyR.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
-		player2.getRect().setX(map.moveX(dummyR));
-		
-		if (player2.getX() > BOARDX - player2.getWidth() / 2)
-			player2.setX(BOARDX - player2.getHeight() / 2);
-		else if (player2.getX() < 0)
-			player2.setX(0);
+			if (player.getY() > BOARDY - player.getHeight() / 2) {
+				player.setYVelocity(0);
+				player.setY(BOARDY - player.getHeight() / 2);
+			} else if (player.getY() < 0) {
+				player.setYVelocity(0);
+				player.setY(0);
+				player.setAirborne(false);
+			} else if (player.getYVelocity() > -100) {
+				player.setYVelocity(player.getYVelocity() - 10 * GRAVITY * Gdx.graphics.getDeltaTime());
+			} else {
+				player.setYVelocity(-100);
 
-		currentYVel = player2.getYVelocity();
-		currentY = player2.getY();
-		dummyR = player2.getRect();
-		dummyR.setY(currentY + currentYVel * Gdx.graphics.getDeltaTime());
-		player2.getRect().setY(map.moveY(dummyR, player2));
+			}
 
-		if (player2.getY() > BOARDY - player2.getHeight() / 2) {
-			player2.setYVelocity(0);
-			player2.setY(BOARDY - player2.getHeight() / 2);
-		} else if (player2.getY() < 0) {
-			player2.setYVelocity(0);
-			player2.setY(0);
-			player2.setAirborne(false);
-		} else if (player2.getYVelocity() > -100) {
-			player2.setYVelocity(currentYVel - 10 * GRAVITY
-					* Gdx.graphics.getDeltaTime());
-		} else {
-			player2.setYVelocity(-100);
+			if (Intersector.overlaps(jumprenew.getCircle(), player.getRect())){
+				player.setAirborne(false);
+			}
 		}
 	}
 
 	// Collision method
-	private void updateCollsions() {
-		
-		// check collision with wall
-		
+	private void updateCollisions() {
 		
 		if (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
-			// player1.setXVelocity(0);
-			// player2.setXVelocity(0);
-			
+
 			if (player1.getY() > player2.getY() && player2.getYVelocity() != 0) {
 				player1.setYVelocity(player2.getYVelocity());
 			}
