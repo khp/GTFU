@@ -61,7 +61,7 @@ public class GameScreen implements Screen{
 		camera = new OrthographicCamera(); // init camera
 		camera.setToOrtho(false, BOARDX, BOARDY);
 		shapeRenderer = new ShapeRenderer();
-			
+
 		setUpLevel();
 			
 		intersectionPlayers = new Rectangle();
