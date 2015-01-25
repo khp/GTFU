@@ -64,7 +64,8 @@ public class Tile implements Collidable {
 		float currentX = player.getX();
 		player.setX(currentX + displacement);
 		
-		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
+		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)
+				&& intersection.getHeight() > 2) {
 			player.setXVelocity(0);
 			if (intersection.getX() == player.getX()){
 				player.setX(intersection.getX() + intersection.getWidth());
@@ -85,7 +86,8 @@ public class Tile implements Collidable {
 		float currentY = player.getY();
 		player.setY(currentY + currentYVel);
 		
-		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)) {
+		if (Intersector.intersectRectangles(playerRect, this.rect, intersection)
+				&& intersection.getWidth() > 2) {
 			player.setYVelocity(0);
 			if (intersection.getY() == player.getY()) {
 				player.setY(intersection.getY() + intersection.getHeight());

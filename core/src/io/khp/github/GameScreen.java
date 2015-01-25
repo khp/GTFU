@@ -173,15 +173,16 @@ public class GameScreen implements Screen{
 		boolean first = true;
 		for(Player player : players){
 			// Update Players
+			if (first){
+				player1.checkCollisionsP(player2, map.getTileArray());
+
+				first = false;
+			}
 			for(Tile[] r : map.getTileArray())
 				for(Tile t : r)
 					t.checkCollisions(player);
 			
-			if(first){
-				player1.checkCollisionsP(player2, map.getTileArray());
-				player2.checkCollisionsP(player1, map.getTileArray());
-				first = false;
-			}
+
 
 			player.setX(player.getX() + player.getXVelocity() * Gdx.graphics.getDeltaTime());
 			player.setY(player.getY() + player.getYVelocity() * Gdx.graphics.getDeltaTime());
@@ -206,7 +207,7 @@ public class GameScreen implements Screen{
 				player.setYVelocity(100);
 			}	
 			else {
-				player.setYVelocity(-150);
+				player.setYVelocity(-100);
 			}	
 		
 			// Renew the player's jump if they hit a JumpRenew
