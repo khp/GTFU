@@ -28,6 +28,7 @@ public class Map {
 		}
 		return startA;
 	}
+	
 	public Tile findStartB () {
 		for (Tile[] tr : tileArray) {
 			for (Tile t : tr) {
