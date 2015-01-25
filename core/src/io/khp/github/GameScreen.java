@@ -195,8 +195,12 @@ public class GameScreen implements Screen{
 				player.setAirborne(false);
 			} else if (player.getYVelocity() > -100) {
 				player.setYVelocity(player.getYVelocity() - 10 * GRAVITY * Gdx.graphics.getDeltaTime());
-			} else {
-				player.setYVelocity(-100);
+			} 
+			else if (player.getYVelocity() > 100) {
+				player.setYVelocity(100);
+			}	
+			else {
+				player.setYVelocity(-150);
 
 			}	
 		
@@ -212,17 +216,10 @@ public class GameScreen implements Screen{
 	private void updateCollisions() {
 		
 		// check collisions between players
-		if (Intersector.intersectRectangles(player1.getRect(), player2.getRect(), this.intersectionPlayers)) {
+		if (Intersector.intersectRectangles(player1.getRect(), 
+				player2.getRect(), this.intersectionPlayers)) {
 			
-			// If player 1 is above player 2 when they collide:
-			// Set player 1's y-velocity to player 2's
-			if (player1.getY() > player2.getY() && player2.getYVelocity() != terminalVel) {
-				player1.setYVelocity(player2.getYVelocity());
-			}
-			// Vice versa if player 2 is above player 1
-			else if (player1.getY() <= player2.getY() && player2.getYVelocity() != terminalVel) {
-				player2.setYVelocity(player1.getYVelocity());
-			}
+	
 			
 			// Get the positions of the 2 players, as well as the magnitude of their overlap
 			float player1X = player1.getX();
@@ -234,22 +231,18 @@ public class GameScreen implements Screen{
 			
 			// If player 1 is above player 2, displace player 1 up and refresh jump
 			if (player1Y > player2Y) {
-				player1.setY(player1Y + yDisplacement * 2);
+				player1.setYVelocity(player2.getYVelocity());
 				player1.setAirborne(false);
 			}
 			// If player 2 is above player 2, displace player 2 up and refresh jump
 			else if (player1Y < player2Y) {
-				player2.setY(player2Y + yDisplacement * 2);
+				player2.setYVelocity(player1.getYVelocity());
 				player2.setAirborne(false);
 			}
 			// If player 1 is on player 2's right, displace them both in the appropriate direction
-			else if (player1X > player2X) {
-				player1.setX(player1X + xDisplacement);
-				player2.setX(player2X - xDisplacement);
-			}
-			else {
-				player1.setX(player1X - xDisplacement);
-				player2.setX(player2X + xDisplacement);
+			if (player1X > player2X) {
+				player1.setXVelocity(0);
+				player2.setXVelocity(0);
 			}
 		}
 		
