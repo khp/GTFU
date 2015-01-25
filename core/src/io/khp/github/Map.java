@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Map {
 	
-	final Tile startA = new Tile(TileType.STARTA, 5, 5);
-	final Tile startB = new Tile(TileType.STARTB, 10, 5);
+	final Tile startA = new Tile(TileType.STARTA, 10, 5);
+	final Tile startB = new Tile(TileType.STARTB, 30, 5);
 	
 	private Tile[][] tileArray;
 	private int tileHeight;
