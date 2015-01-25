@@ -21,8 +21,8 @@ public class Tile implements Collidable {
 		if (this.type == TileType.WALL) {
 			this.rect = new Rectangle(x*20, (y-1)*20, 20, 20);
 		}
-		this.x = x;
-		this.y = y;
+		this.x = x*20;
+		this.y = y*20;
 	}
 
 	public Rectangle getRectangle() {

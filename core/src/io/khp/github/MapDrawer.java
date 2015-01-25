@@ -1,4 +1,5 @@
 package io.khp.github;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.files.FileHandle;
 
@@ -28,7 +29,7 @@ public class MapDrawer {
 				else if (colourCode == WHITE){
 					tempTileType = TileType.EMPTY;
 				}
-				else if (colourCode == GREEN){
+				else if (colourCode == Color.rgba8888(Color.GREEN)){
 					tempTileType = TileType.STARTA;
 				}
 				else if (colourCode == BLUE){

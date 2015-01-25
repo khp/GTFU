@@ -15,4 +15,14 @@ public class Player2 extends Player {
 		rect.y = 200;
 		this.setRect(rect);
 	}
+	
+	public Player2(Tile start) {
+		
+		rect = new Rectangle();
+		rect.width = height;
+		rect.height = width;
+		rect.x = start.getX();
+		rect.y = start.getY();
+		this.setRect(rect);
+	}
 }
