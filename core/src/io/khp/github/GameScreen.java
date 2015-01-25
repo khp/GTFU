@@ -36,9 +36,10 @@ public class GameScreen implements Screen{
 
 	MainGame g;
 
-	public static final float GRAVITY = 200;
+	private static final float GRAVITY = 400;
 	private static final int BOARDX = 800;
 	private static final int BOARDY = 480;
+	private static final float terminalVel = -300;
 	
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
@@ -188,6 +189,7 @@ public class GameScreen implements Screen{
 		// Update Player 1
 		float currentXVel = player1.getXVelocity();
 		float currentX = player1.getX();
+		
 		Rectangle dummyR = player1.getRect();
 		dummyR.setX(currentX + currentXVel * Gdx.graphics.getDeltaTime());
 		player1.getRect().setX(map.moveX(dummyR));
@@ -210,11 +212,11 @@ public class GameScreen implements Screen{
 			player1.setYVelocity(0);
 			player1.setY(0);
 			player1.setAirborne(false);
-		} else if (player1.getYVelocity() > -100) {
+		} else if (player1.getYVelocity() > terminalVel) {
 			player1.setYVelocity(currentYVel - 10 * GRAVITY
 					* Gdx.graphics.getDeltaTime());
 		} else {
-			player1.setYVelocity(-100);
+			player1.setYVelocity(terminalVel);
 		}
 
 		// on collision the dot disappears and the players jump limit is increased by one.
@@ -250,11 +252,11 @@ public class GameScreen implements Screen{
 			player2.setYVelocity(0);
 			player2.setY(0);
 			player2.setAirborne(false);
-		} else if (player2.getYVelocity() > -100) {
+		} else if (player2.getYVelocity() > terminalVel) {
 			player2.setYVelocity(currentYVel - 10 * GRAVITY
 					* Gdx.graphics.getDeltaTime());
 		} else {
-			player2.setYVelocity(-100);
+			player2.setYVelocity(terminalVel);
 		}
 		
 		for (JumpRenew jumper : renewButtons) {
@@ -273,10 +275,10 @@ public class GameScreen implements Screen{
 			// player1.setXVelocity(0);
 			// player2.setXVelocity(0);
 			
-			if (player1.getY() > player2.getY() && player2.getYVelocity() != 0) {
+			if (player1.getY() > player2.getY() && player2.getYVelocity() != terminalVel) {
 				player1.setYVelocity(player2.getYVelocity());
 			}
-			else if (player1.getY() <= player2.getY() && player1.getYVelocity() != 0) {
+			else if (player1.getY() <= player2.getY() && player2.getYVelocity() != terminalVel) {
 				player2.setYVelocity(player1.getYVelocity());
 			}
 			
@@ -284,22 +286,22 @@ public class GameScreen implements Screen{
 			float player1Y = player1.getY();
 			float player2X = player2.getX();
 			float player2Y = player2.getY();
-			float xDisplacement = intersectionPlayers.width / 2;
+			float xDisplacement = intersectionPlayers.width /2;
 			float yDisplacement = intersectionPlayers.height / 2;
 			
 			if (player1Y > player2Y) {
-				player1.setY(player1Y + yDisplacement);
+				player1.setY(player1Y + yDisplacement * 2);
 				// player2.setY(player2Y - yDisplacement);
 				
 				player1.setAirborne(false);
 			}
-			else if (player1Y <= player2Y) {
+			else if (player1Y < player2Y) {
 				// player1.setY(player1Y - yDisplacement);
-				player2.setY(player2Y + yDisplacement);
+				player2.setY(player2Y + yDisplacement * 2);
 				
 				player2.setAirborne(false);
 			}
-			else if (player1X >= player2X) {
+			else if (player1X > player2X) {
 				player1.setX(player1X + xDisplacement);
 				player2.setX(player2X - xDisplacement);
 			}

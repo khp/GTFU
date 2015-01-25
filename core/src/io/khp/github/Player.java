@@ -13,7 +13,7 @@ public abstract class Player {
 	private boolean airborne;
 	
 	public void jump() {
-		this.yVelocity = 500;
+		this.yVelocity = 700;
 		this.airborne = true;
 	}
 	
