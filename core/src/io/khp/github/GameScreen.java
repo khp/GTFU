@@ -27,7 +27,7 @@ public class GameScreen implements Screen{
 	private static final int BOARDX = 800;
 	private static final int BOARDY = 480;
 	private static final float TERMINALVEL = -300;
-	private static final int NUMOFLEVELS = 4;
+	private static final int NUMOFLEVELS = 7;
 	
 	private OrthographicCamera camera;
 	private ShapeRenderer shapeRenderer;
